@@ -1,0 +1,1411 @@
+{
+ "source": "https://download.swift.org/swift-evolution/v1/evolution.json",
+ "commit": "bedc1697840f74162e489749e5ab8b2c0bdeba85",
+ "creationDate": "2026-11-17T07:32:16Z",
+ "proposals": [
+  {
+   "id": "SE-0220",
+   "title": "`count(where:)`",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0220-count-where.md",
+   "flag": "",
+   "summary": "While Swift's `Sequence` models brings a lot of niceties that we didn't have access to in Objective-C, like `map` and `filter`, there are other useful operations on sequences that the standard library doesn't support yet. One current missing operation is `count(where:)`, which counts the number of elements in a `Sequence` that pass some test."
+  },
+  {
+   "id": "SE-0270",
+   "title": "Add Collection Operations on Noncontiguous Elements",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0270-rangeset-and-collection-operations.md",
+   "flag": "",
+   "summary": "We can use a `Range<Index>` to refer to a group of consecutive positions in a collection, but the standard library doesn't currently provide a way to refer to discontiguous positions in an arbitrary collection. I propose the addition of a `RangeSet` type that can represent any number of positions, along with collection algorithms that operate on those positions."
+  },
+  {
+   "id": "SE-0301",
+   "title": "Package Editor Commands",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0301-package-editing-commands.md",
+   "flag": "",
+   "summary": "Because Swift package manifests are written in Swift using the PackageDescription API, it is difficult to automate common tasks like adding a new product, target, or dependency. This proposal introduces new `swift package` subcommands to perform some common editing tasks which can streamline users' workflows and enable new higher-level tools."
+  },
+  {
+   "id": "SE-0364",
+   "title": "Warning for Retroactive Conformances of External Types",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0364-retroactive-conformance-warning.md",
+   "flag": "",
+   "summary": "Many Swift libraries vend currency protocols, like Equatable, Hashable, Codable, among others, that unlock worlds of common functionality for types that conform to them. Sometimes, if a type from another module does not conform to a common currency protocols, developers will declare a conformance of that type to that protocol within their module. However, protocol conformances are globally unique "
+  },
+  {
+   "id": "SE-0371",
+   "title": "Isolated synchronous deinit",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0371-isolated-synchronous-deinit.md",
+   "flag": "",
+   "summary": "This feature allows `deinit`'s of actors and global-actor isolated classes to access non-sendable isolated state, lifting restrictions imposed by [SE-0327](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0327-actor-initializers.md). This is achieved by providing runtime support for hopping onto the relevant actor's executor before executing the `deinit` body."
+  },
+  {
+   "id": "SE-0387",
+   "title": "Swift SDKs for Cross-Compilation",
+   "state": "implemented",
+   "version": "6.1",
+   "link": "0387-cross-compilation-destinations.md",
+   "flag": "",
+   "summary": "Cross-compilation is a common development use case. When cross-compiling, we need to refer to these concepts:"
+  },
+  {
+   "id": "SE-0405",
+   "title": "String Initializers with Encoding Validation",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0405-string-validating-initializers.md",
+   "flag": "",
+   "summary": "We propose adding new `String` failable initializers that validate encoded input, and return `nil` when the input contains any invalid elements."
+  },
+  {
+   "id": "SE-0408",
+   "title": "Pack Iteration",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0408-pack-iteration.md",
+   "flag": "",
+   "summary": "Building upon the Value and Type Parameter Packs proposal [SE-0393](https://forums.swift.org/t/se-0393-value-and-type-parameter-packs/63859), this proposal enables iterating over each element in a value pack and bind each value to a local variable using a `for-in` syntax."
+  },
+  {
+   "id": "SE-0409",
+   "title": "Access-level modifiers on import declarations",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0409-access-level-on-imports.md",
+   "flag": "InternalImportsByDefault",
+   "summary": "Declaring the visibility of a dependency with an access-level modifier on import declarations enables enforcing which declarations can reference the imported module. A dependency can be marked as being visible only to the source file, module, package, or to all clients. This brings the familiar behavior of the access level of declarations to dependencies and imported declarations. This feature can"
+  },
+  {
+   "id": "SE-0410",
+   "title": "Low-Level Atomic Operations ⚛︎",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0410-atomics.md",
+   "flag": "",
+   "summary": "This proposal adds a limited set of low-level atomic operations to the Standard Library, including native spellings for C++-style memory orderings. Our goal is to enable intrepid library authors and developers writing system level code to start building synchronization constructs directly in Swift."
+  },
+  {
+   "id": "SE-0413",
+   "title": "Typed throws",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0413-typed-throws.md",
+   "flag": "",
+   "summary": "Swift's error handling model allows functions and closures marked `throws` to note that they can exit by throwing an error. The error values themselves are always type-erased to `any Error`. This approach encourages errors to be handled generically, and remains a good default for most code. However, there are some places where the type erasure is unfortunate, because it doesn't allow for more prec"
+  },
+  {
+   "id": "SE-0414",
+   "title": "Region based Isolation",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0414-region-based-isolation.md",
+   "flag": "RegionBasedIsolation",
+   "summary": "Swift Concurrency assigns values to *isolation domains* determined by actor and task boundaries. Code running in distinct isolation domains can execute concurrently, and `Sendable` checking defines away concurrent access to shared mutable state by preventing non-`Sendable` values from being passed across isolation boundaries full stop. In practice, this is a significant semantic restriction, becau"
+  },
+  {
+   "id": "SE-0415",
+   "title": "Function Body Macros",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0415-function-body-macros.md",
+   "flag": "",
+   "summary": "Macros augment Swift programs with additional code, which can include new declarations, expressions, and statements. One of the key ways in which one might want to augment code---synthesizing or updating the body of a function---is not currently supported by the macro system. One can create new functions that have their own function bodies, but not provide, augment, or replace function bodies for "
+  },
+  {
+   "id": "SE-0416",
+   "title": "Subtyping for keypath literals as functions",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0416-keypath-function-subtyping.md",
+   "flag": "",
+   "summary": "Today, keypath literals can only be narrowly converted to a function which exactly matches the argument and return type. This proposal allows key path literals to partake in the full generality of the conversions we allow between arbitrary function types, so that the following code compiles without error:"
+  },
+  {
+   "id": "SE-0417",
+   "title": "Task Executor Preference",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0417-task-executor-preference.md",
+   "flag": "",
+   "summary": "Swift Concurrency uses tasks and actors to model concurrency and primarily relies on actor isolation to determine where a specific piece of code shall execute."
+  },
+  {
+   "id": "SE-0418",
+   "title": "Inferring `Sendable` for methods and key path literals",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0418-inferring-sendable-for-methods.md",
+   "flag": "InferSendableFromCaptures",
+   "summary": "This proposal is focused on a few corner cases in the language surrounding functions as values and key path literals when using concurrency. We propose Sendability should be inferred for partial and unapplied methods. We also propose to lift a Sendability restriction placed on key path literals in [SE-0302](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0302-concurrent-value-and-"
+  },
+  {
+   "id": "SE-0419",
+   "title": "Swift Backtrace API",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0419-backtrace-api.md",
+   "flag": "",
+   "summary": "This year we are improving the usability of Swift for command line and server-side development by adding first-class support for backtraces to Swift."
+  },
+  {
+   "id": "SE-0420",
+   "title": "Inheritance of actor isolation",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0420-inheritance-of-actor-isolation.md",
+   "flag": "",
+   "summary": "Under Swift's [actors design](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0306-actors.md), every function in Swift has an actor isolation: it is either isolated to some specific actor or non-isolated. It is sometimes useful to be able to give a function the same actor isolation as its caller, either to give it access to actor-isolated data or just to avoid unnecessary suspensi"
+  },
+  {
+   "id": "SE-0421",
+   "title": "Generalize effect polymorphism for `AsyncSequence` and `AsyncIteratorProtocol`",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0421-generalize-async-sequence.md",
+   "flag": "",
+   "summary": "This proposal generalizes `AsyncSequence` in two ways:"
+  },
+  {
+   "id": "SE-0422",
+   "title": "Expression macro as caller-side default argument",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0422-caller-side-default-argument-macro-expression.md",
+   "flag": "",
+   "summary": "This proposal aims to lift the restriction afore set in [SE-0382 \"Expression macros\"](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0382-expression-macros.md) to allow non-built-in expression macros as caller-side default argument expressions."
+  },
+  {
+   "id": "SE-0423",
+   "title": "Dynamic actor isolation enforcement from non-strict-concurrency contexts",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0423-dynamic-actor-isolation.md",
+   "flag": "DynamicActorIsolation",
+   "summary": "Many Swift programs need to interoperate with frameworks written in C/C++/Objective-C whose implementations cannot participate in static data race safety. Similarly, many Swift programs have dependencies that have not yet adopted strict concurrency checking. A `@preconcurrency import` statement downgrades concurrency-related error messages that the programmer cannot resolve because the fundamental"
+  },
+  {
+   "id": "SE-0424",
+   "title": "Custom isolation checking for SerialExecutor",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0424-custom-isolation-checking-for-serialexecutor.md",
+   "flag": "",
+   "summary": "[SE-0392 (Custom Actor Executors)](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0392-custom-actor-executors.md) added support for custom actor executors, but its support is incomplete. Safety checks like [`Actor.assumeIsolated`](https://developer.apple.com/documentation/swift/actor/assumeisolated(_:file:line:)) work correctly when code is running on the actor through a task, bu"
+  },
+  {
+   "id": "SE-0425",
+   "title": "128-bit Integer Types",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0425-int128.md",
+   "flag": "",
+   "summary": ""
+  },
+  {
+   "id": "SE-0426",
+   "title": "BitwiseCopyable",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0426-bitwise-copyable.md",
+   "flag": "",
+   "summary": "We propose a new, [limited](#limitations) protocol `BitwiseCopyable` that *can* be conformed to by types that are \"bitwise-copyable\"[^1]--that is, that can be moved or copied with direct calls to `memcpy` and which require no special destroy operation. When compiling generic code with such constraints, the compiler can emit these efficient operations directly, only requiring minimal overhead to lo"
+  },
+  {
+   "id": "SE-0427",
+   "title": "Noncopyable Generics",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0427-noncopyable-generics.md",
+   "flag": "",
+   "summary": "The noncopyable types introduced in [SE-0390: Noncopyable structs and enums](0390-noncopyable-structs-and-enums.md) cannot be used with generics, protocols, or existentials, leaving an expressivity gap in the language. This proposal extends Swift's type system to fill this gap."
+  },
+  {
+   "id": "SE-0428",
+   "title": "Resolve DistributedActor protocols",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0428-resolve-distributed-actor-protocols.md",
+   "flag": "",
+   "summary": "Swift's distributed actors offer developers a flexible bring-your-own-runtime approach to building distributed systems using the actor paradigm. The initial design of the feature aimed for systems where all nodes of a distributed actor system (such as nodes in a [cluster](https://github.com/apple/swift-distributed-actors)) share the same binary, and therefore all have access to the concrete `distr"
+  },
+  {
+   "id": "SE-0429",
+   "title": "Partial consumption of noncopyable values",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0429-partial-consumption.md",
+   "flag": "",
+   "summary": "We propose allowing noncopyable fields in deinit-less aggregates to be consumed individually, so long as they are defined in the current module or frozen. Additionally, we propose allowing fields of such an aggregate with a deinit to be consumed individually *within that deinit*. This permits common patterns to be used with many noncopyable values."
+  },
+  {
+   "id": "SE-0430",
+   "title": "`sending` parameter and result values",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0430-transferring-parameters-and-results.md",
+   "flag": "",
+   "summary": "This proposal extends region isolation to enable the application of an explicit `sending` annotation to function parameters and results. A function parameter or result that is annotated with `sending` is required to be disconnected at the function boundary and thus possesses the capability of being safely sent across an isolation domain or merged into an actor-isolated region in the function's bod"
+  },
+  {
+   "id": "SE-0431",
+   "title": "`@isolated(any)` Function Types",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0431-isolated-any-functions.md",
+   "flag": "",
+   "summary": "The actor isolation of a function is an important part of how it's used. Swift can reason precisely about the isolation of a specific function *declaration*, but when functions are passed around as *values*, Swift's function types are not expressive enough to keep up. This proposal adds a new kind of function type that carries its function's actor isolation dynamically. This solves a variety of ex"
+  },
+  {
+   "id": "SE-0432",
+   "title": "Borrowing and consuming pattern matching for noncopyable types",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0432-noncopyable-switch.md",
+   "flag": "",
+   "summary": "Pattern matching over noncopyable types, particularly noncopyable enums, can be generalized to allow for pattern matches that borrow their subject, in addition to the existing support for consuming pattern matches."
+  },
+  {
+   "id": "SE-0433",
+   "title": "Synchronous Mutual Exclusion Lock 🔒",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0433-mutex.md",
+   "flag": "",
+   "summary": "This proposal introduces a mutual exclusion lock, or a mutex, to the standard library. `Mutex` will be a new synchronization primitive in the synchronization module."
+  },
+  {
+   "id": "SE-0434",
+   "title": "Usability of global-actor-isolated types",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0434-global-actor-isolated-types-usability.md",
+   "flag": "GlobalActorIsolatedTypesUsability",
+   "summary": "This proposal encompasses a collection of changes to concurrency rules concerning global-actor-isolated types to improve their usability."
+  },
+  {
+   "id": "SE-0435",
+   "title": "Swift Language Version Per Target",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0435-swiftpm-per-target-swift-language-version-setting.md",
+   "flag": "",
+   "summary": "The current Swift Package Manager manifest API for specifying Swift language version(s) applies to an entire package which is limiting when adopting new language versions that have implications for source compatibility."
+  },
+  {
+   "id": "SE-0436",
+   "title": "Objective-C implementations in Swift",
+   "state": "implemented",
+   "version": "6.1",
+   "link": "0436-objc-implementation.md",
+   "flag": "",
+   "summary": "We propose an alternative to `@objc` classes where Objective-C header `@interface` declarations are implemented by Swift `extension`s marked with `@objc @implementation`. The resulting classes will be implemented in Swift, but will be indistinguishable from Objective-C classes, fully supporting Objective-C subclassing and runtime trickery."
+  },
+  {
+   "id": "SE-0437",
+   "title": "Noncopyable Standard Library Primitives",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0437-noncopyable-stdlib-primitives.md",
+   "flag": "",
+   "summary": ""
+  },
+  {
+   "id": "SE-0438",
+   "title": "Metatype Keypaths",
+   "state": "implemented",
+   "version": "6.1",
+   "link": "0438-metatype-keypath.md",
+   "flag": "",
+   "summary": "Key path expressions access properties dynamically. They are declared with a concrete root type and one or more key path components that define a path to a resulting value via the type’s properties, subscripts, optional-chaining expressions, forced unwrapped expressions, or self. This proposal expands key path expression access to include static properties of a type, i.e., metatype keypaths."
+  },
+  {
+   "id": "SE-0439",
+   "title": "Allow trailing comma in comma-separated lists",
+   "state": "implemented",
+   "version": "6.1",
+   "link": "0439-trailing-comma-lists.md",
+   "flag": "",
+   "summary": "This proposal aims to allow the use of trailing commas, currently restricted to array and dictionary literals, in symmetrically delimited comma-separated lists."
+  },
+  {
+   "id": "SE-0440",
+   "title": "DebugDescription Macro",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0440-debug-description-macro.md",
+   "flag": "",
+   "summary": "This proposal introduces `@DebugDescription`, a new debugging macro to the standard library, which lets data types specify a custom summary to be presented by the debugger. This macro brings improvements to the debugging experience, and simplifies the maintenance and delivery of debugger type summaries. It can be used in place of `CustomDebugStringConvertible` conformance, or in addition to, for c"
+  },
+  {
+   "id": "SE-0441",
+   "title": "Formalize ‘language mode’ terminology",
+   "state": "implemented",
+   "version": "6.1",
+   "link": "0441-formalize-language-mode-terminology.md",
+   "flag": "",
+   "summary": "The term \"Swift version” can refer to either the toolchain/compiler version or the language mode. This ambiguity is a consistent source of confusion. This proposal formalizes the term *language mode* in tool options and APIs."
+  },
+  {
+   "id": "SE-0442",
+   "title": "Allow TaskGroup's ChildTaskResult Type To Be Inferred",
+   "state": "implemented",
+   "version": "6.1",
+   "link": "0442-allow-taskgroup-childtaskresult-type-to-be-inferred.md",
+   "flag": "",
+   "summary": "`TaskGroup` and `ThrowingTaskGroup` currently require that one of their two generics (`ChildTaskResult`) always be specified upon creation. Due to improvements in closure parameter/result type inference introduced by [SE-0326](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0326-extending-multi-statement-closure-inference.md) this can be simplified by allowing the compiler to infe"
+  },
+  {
+   "id": "SE-0443",
+   "title": "Precise Control Flags over Compiler Warnings",
+   "state": "implemented",
+   "version": "6.1",
+   "link": "0443-warning-control-flags.md",
+   "flag": "",
+   "summary": "This proposal introduces new compiler options that allow fine-grained control over how the compiler emits certain warnings: as warnings or as errors."
+  },
+  {
+   "id": "SE-0444",
+   "title": "Member import visibility",
+   "state": "implemented",
+   "version": "6.1",
+   "link": "0444-member-import-visibility.md",
+   "flag": "MemberImportVisibility",
+   "summary": "In Swift, there are rules dictating whether the name of a declaration in another module is considered in scope. For example, if you have a program that uses the `swift-algorithms` package and you want to use the global function [chain()](https://github.com/apple/swift-algorithms/blob/33abb694280321a84aa7dc9806de284afb8ca226/Sources/Algorithms/Chain.swift#L287) then you must write `import Algorithm"
+  },
+  {
+   "id": "SE-0445",
+   "title": "Improving `String.Index`'s printed descriptions",
+   "state": "implemented",
+   "version": "6.1",
+   "link": "0445-string-index-printing.md",
+   "flag": "",
+   "summary": "This proposal conforms `String.Index` to `CustomDebugStringConvertible`."
+  },
+  {
+   "id": "SE-0446",
+   "title": "Nonescapable Types",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0446-non-escapable.md",
+   "flag": "",
+   "summary": "We propose adding a new type constraint `~Escapable` for types that can be locally copied but cannot be assigned or transferred outside of the immediate context. This complements the `~Copyable` types added with SE-0390 by introducing another set of compile-time-enforced lifetime controls that can be used for safe, highly-performant APIs."
+  },
+  {
+   "id": "SE-0447",
+   "title": "Span: Safe Access to Contiguous Storage",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0447-span-access-shared-contiguous-storage.md",
+   "flag": "",
+   "summary": "We introduce `Span<T>`, an abstraction for container-agnostic access to contiguous memory. It will expand the expressivity of performant Swift code without compromising on the memory safety properties we rely on: temporal safety, spatial safety, definite initialization and type safety."
+  },
+  {
+   "id": "SE-0448",
+   "title": "Regex lookbehind assertions",
+   "state": "accepted",
+   "version": "",
+   "link": "0448-regex-lookbehind-assertions.md",
+   "flag": "",
+   "summary": "Regex supports lookahead assertions, but does not currently support lookbehind assertions. We propose adding these."
+  },
+  {
+   "id": "SE-0449",
+   "title": "Allow `nonisolated` to prevent global actor inference",
+   "state": "implemented",
+   "version": "6.1",
+   "link": "0449-nonisolated-for-global-actor-cutoff.md",
+   "flag": "",
+   "summary": "This proposal allows annotating a set of declarations with `nonisolated` to prevent global actor inference. Additionally, it extends the existing rules for when `nonisolated` can be written on a stored property, improving usability."
+  },
+  {
+   "id": "SE-0450",
+   "title": "Package traits",
+   "state": "implemented",
+   "version": "6.1",
+   "link": "0450-swiftpm-package-traits.md",
+   "flag": "",
+   "summary": "Over the past years the package ecosystem has grown tremendously in both the amount of packages and the functionality that individual packages offer. Additionally, Swift is being used in more environments such as embedded systems or Wasm. This proposal aims to give package authors a new tool to conditionalize the features they offer and the dependencies that they use."
+  },
+  {
+   "id": "SE-0451",
+   "title": "Raw identifiers",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0451-escaped-identifiers.md",
+   "flag": "",
+   "summary": "This proposal adds *raw identifiers* to the Swift grammar, which are backtick-delimited identifiers that can contain characters other than the current set of identifier-allowed characters in the language."
+  },
+  {
+   "id": "SE-0452",
+   "title": "Integer Generic Parameters",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0452-integer-generic-parameters.md",
+   "flag": "",
+   "summary": "In this proposal, we introduce the ability to parameterize generic types on literal integer parameters."
+  },
+  {
+   "id": "SE-0453",
+   "title": "InlineArray, a fixed-size array",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0453-vector.md",
+   "flag": "",
+   "summary": "This proposal introduces a new type to the standard library, `InlineArray`, which is a fixed-size array. This is analogous to the [classical C arrays `T[N]`](https://en.cppreference.com/w/c/language/array), [C++'s `std::array<T, N>`](https://en.cppreference.com/w/cpp/container/array), and [Rust's arrays `[T; N]`](https://doc.rust-lang.org/std/primitive.array.html)."
+  },
+  {
+   "id": "SE-0454",
+   "title": "Custom Allocator for Toolchain",
+   "state": "accepted",
+   "version": "",
+   "link": "0454-memory-allocator.md",
+   "flag": "",
+   "summary": "The tools in the Swift toolchain require allocating data structures for compiling the code. Different memory allocators have differing performance characteristics. Changing the default memory allocator away from the default (system) allocator can yield benefits if the allocator is better tuned to the allocation patterns of the compiler."
+  },
+  {
+   "id": "SE-0455",
+   "title": "SwiftPM @testable build setting",
+   "state": "accepted",
+   "version": "",
+   "link": "0455-swiftpm-testable-build-setting.md",
+   "flag": "",
+   "summary": "The current Swift Package Manager build system is currently hardcoded to pass the `-enable-testing` flag to the Swift compiler to enable `@testable import` when building in debug mode."
+  },
+  {
+   "id": "SE-0456",
+   "title": "Add `Span`-providing Properties to Standard Library Types",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0456-stdlib-span-properties.md",
+   "flag": "",
+   "summary": "We recently [introduced](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0447-span-access-shared-contiguous-storage.md) the `Span` and `RawSpan` types, but did not provide ways to obtain instances of either from existing types. This proposal adds properties that vend a lifetime-dependent `Span` from a variety of standard library types, as well as vend a lifetime-dependent `RawSpan"
+  },
+  {
+   "id": "SE-0457",
+   "title": "Expose attosecond representation of `Duration`",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0457-duration-attosecond-represenation.md",
+   "flag": "",
+   "summary": "This proposal introduces public APIs to enable seamless integration of `Int128` into the `Duration` type. Specifically, it provides support for directly accessing a `Duration`'s attosecond representation via the newly available `Int128` type and simplifies the creation of `Duration` values from attoseconds."
+  },
+  {
+   "id": "SE-0458",
+   "title": "Opt-in Strict Memory Safety Checking",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0458-strict-memory-safety.md",
+   "flag": "",
+   "summary": "[Memory safety](https://en.wikipedia.org/wiki/Memory_safety) is a property of programming languages and their implementations that prevents programmer errors from manifesting as [undefined behavior](https://en.wikipedia.org/wiki/Undefined_behavior) at runtime. Undefined behavior effectively breaks the semantic model of a language, with unpredictable results including crashes, data corruption, and "
+  },
+  {
+   "id": "SE-0459",
+   "title": "Add `Collection` conformances for `enumerated()`",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0459-enumerated-collection.md",
+   "flag": "",
+   "summary": "This proposal aims to fix the lack of `Collection` conformance of the sequence returned by `enumerated()`, preventing it from being used in a context that requires a `Collection`."
+  },
+  {
+   "id": "SE-0460",
+   "title": "Explicit Specialization",
+   "state": "implemented",
+   "version": "6.3",
+   "link": "0460-specialized.md",
+   "flag": "",
+   "summary": "The Swift compiler has the ability to \"specialize\" a generic function at compile time. This specialization creates a custom implementation of the function, where the generic placeholders are substituted with specific types. This can unlock optimizations of that specialized function that can be dramatically faster than the unspecialized version in some circumstances. The compiler can generate this "
+  },
+  {
+   "id": "SE-0461",
+   "title": "Run nonisolated async functions on the caller's actor by default",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0461-async-function-isolation.md",
+   "flag": "NonisolatedNonsendingByDefault",
+   "summary": "Swift's general philosophy is to prioritize safety and ease-of-use over performance, while still providing tools to write more efficient code. The current behavior of nonisolated async functions prioritizes main actor responsiveness at the expense of usability."
+  },
+  {
+   "id": "SE-0462",
+   "title": "Task Priority Escalation APIs",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0462-task-priority-escalation-apis.md",
+   "flag": "",
+   "summary": "A large part of Swift Concurrency is its Structured Concurrency model, in which tasks automatically form parent-child relationships, and inherit certain traits from their parent task. For example, a task started from a medium priority task, also starts on the medium priority, and not only that – if the parent task gets awaited on from a higher priority task, the parent's as well as all of its chil"
+  },
+  {
+   "id": "SE-0463",
+   "title": "Import Objective-C completion handler parameters as `@Sendable`",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0463-sendable-completion-handlers.md",
+   "flag": "",
+   "summary": "This proposal changes the Objective-C importing rules such that completion handler parameters are `@Sendable` by default."
+  },
+  {
+   "id": "SE-0464",
+   "title": "UTF8Span: Safe UTF-8 Processing Over Contiguous Bytes",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0464-utf8span-safe-utf8-processing.md",
+   "flag": "",
+   "summary": "We introduce `UTF8Span` for efficient and safe Unicode processing over contiguous storage. `UTF8Span` is a memory safe non-escapable type [similar to `Span`](0447-span-access-shared-contiguous-storage.md)."
+  },
+  {
+   "id": "SE-0465",
+   "title": "Standard Library Primitives for Nonescapable Types",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0465-nonescapable-stdlib-primitives.md",
+   "flag": "",
+   "summary": "This document proposes to allow `Optional` and `Result` to hold instances of nonescapable types, and continues the work of adding support for noncopyable and nonescapable types throughout the Swift Standard Library."
+  },
+  {
+   "id": "SE-0466",
+   "title": "Control default actor isolation inference",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0466-control-default-actor-isolation.md",
+   "flag": "",
+   "summary": "This proposal introduces a new compiler setting for inferring `@MainActor` isolation by default within the module to mitigate false-positive data-race safety errors in sequential code."
+  },
+  {
+   "id": "SE-0467",
+   "title": "MutableSpan and MutableRawSpan: delegate mutations of contiguous memory",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0467-MutableSpan.md",
+   "flag": "",
+   "summary": "We recently [introduced](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0447-span-access-shared-contiguous-storage.md) the `Span` and `RawSpan` types, providing shared read-only access to borrowed memory. This proposal adds helper types to delegate mutations of exclusively-borrowed memory: `MutableSpan` and `MutableRawSpan`."
+  },
+  {
+   "id": "SE-0468",
+   "title": "`Hashable` conformance for `Async(Throwing)Stream.Continuation`",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0468-async-stream-continuation-hashable-conformance.md",
+   "flag": "",
+   "summary": "This proposal adds a `Hashable` conformance to `Async(Throwing)Stream.Continuation` to simplify working with multiple streams."
+  },
+  {
+   "id": "SE-0469",
+   "title": "Task Naming",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0469-task-names.md",
+   "flag": "",
+   "summary": "In this proposal, we introduce several new APIs to allow developers to name their Swift Tasks for the purposes of identifying tasks in a human-readable way. These names can then be used to identify tasks by printing their names, programatically inspecting the name property, or by tools which dump and inspect tasks–such as debuggers, swift-inspect or others."
+  },
+  {
+   "id": "SE-0470",
+   "title": "Global-actor isolated conformances",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0470-isolated-conformances.md",
+   "flag": "InferIsolatedConformances",
+   "summary": "Types isolated to a global actor (such as `@MainActor`) are useful for representing data that can only ever be used from a single concurrency context. They occur both in single-threaded programs where all code is expected to run on the main actor as well as larger applications where interaction with the UI occurs through the main actor. Unfortunately, such types are unable to conform to most proto"
+  },
+  {
+   "id": "SE-0471",
+   "title": "Improved Custom SerialExecutor isolation checking for Concurrency Runtime",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0471-SerialExecutor-isIsolated.md",
+   "flag": "",
+   "summary": "In [SE-0424: Custom isolation checking for SerialExecutor](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0424-custom-isolation-checking-for-serialexecutor.md) we introduced a way for custom executors implementing the `SerialExecutor` protocol to assert and assume the static isolation if the dynamic check succeeded. This proposal extends these capabilities, allowing custom execut"
+  },
+  {
+   "id": "SE-0472",
+   "title": "Starting tasks synchronously from caller context",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0472-task-start-synchronously-on-caller-context.md",
+   "flag": "",
+   "summary": "Swift Concurrency's primary means of entering an asynchronous context is creating a Task (structured or unstructured), and from there onwards it is possible to call asynchronous functions, and execution of the current work may *suspend*."
+  },
+  {
+   "id": "SE-0473",
+   "title": "Clock Epochs",
+   "state": "implemented",
+   "version": "6.3",
+   "link": "0473-clock-epochs.md",
+   "flag": "",
+   "summary": "[SE-0329: Clock, Instant, and Duration](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0329-clock-instant-duration.md) introduced three concrete clock types: `SuspendingClock`, `ContinuousClock`, and `UTCClock`. While not all clocks have a meaningful concept of a reference or zero instant, `SuspendingClock` and `ContinuousClock` do, and having access to it can be useful."
+  },
+  {
+   "id": "SE-0474",
+   "title": "Yielding accessors",
+   "state": "accepted",
+   "version": "",
+   "link": "0474-yielding-accessors.md",
+   "flag": "",
+   "summary": "We propose the introduction of two new accessors, `yielding mutate` and `yielding borrow`, for implementing computed properties and subscripts alongside the current `get` and `set`."
+  },
+  {
+   "id": "SE-0475",
+   "title": "Transactional Observation of Values",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0475-observed.md",
+   "flag": "",
+   "summary": "Observation was introduced to add the ability to observe changes in graphs of objects. The initial tools for observation afforded seamless integration into SwiftUI, however aiding SwiftUI is not the only intent of the module - it is more general than that. This proposal describes a new safe, ergonomic and composable way to observe changes to models using an AsyncSequence, starting transactions at "
+  },
+  {
+   "id": "SE-0476",
+   "title": "Controlling the ABI of a function, initializer, property, or subscript",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0476-abi-attr.md",
+   "flag": "",
+   "summary": "We propose introducing the `@abi` attribute, which provides an alternate version of the declaration used for name mangling. This feature would allow developers of ABI-stable libraries to make minor changes, such as changing the sendability of a parameter or renaming a declaration (so long as source compatibility is preserved in a backwards-deployable way), without requiring deep knowledge of compi"
+  },
+  {
+   "id": "SE-0477",
+   "title": "Default Value in String Interpolations",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0477-default-interpolation-values.md",
+   "flag": "",
+   "summary": "A new string interpolation syntax for providing a default string when interpolating an optional value."
+  },
+  {
+   "id": "SE-0478",
+   "title": "File-level defaults",
+   "state": "accepted",
+   "version": "",
+   "link": "0478-default-isolation-typealias.md",
+   "flag": "",
+   "summary": "Introduces `default` declaration syntax to specify default actor isolation, `@diagnose` behavior, or `@available` restrictions for every top-level declaration in the file."
+  },
+  {
+   "id": "SE-0480",
+   "title": "Warning Control Settings for SwiftPM",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0480-swiftpm-warning-control.md",
+   "flag": "",
+   "summary": "This proposal adds new settings to SwiftPM to control how the Swift, C, and C++ compilers treat warnings during the build process. It builds on [SE-0443](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0443-warning-control-flags.md), which introduced warning control flags for the Swift compiler but left SwiftPM support as a future direction."
+  },
+  {
+   "id": "SE-0481",
+   "title": "`weak let`",
+   "state": "implemented",
+   "version": "6.3",
+   "link": "0481-weak-let.md",
+   "flag": "ImmutableWeakCaptures",
+   "summary": "Swift provides weak object references using the `weak` modifier on variables and stored properties. Weak references become `nil` when the object is destroyed, causing the value of the variable to seem to change. Swift has therefore always required `weak` references to be declared with the `var` keyword rather than `let`. However, that causes unnecessary friction with [sendability checking](https:/"
+  },
+  {
+   "id": "SE-0482",
+   "title": "Binary Static Library Dependencies",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0482-swiftpm-static-library-binary-target-non-apple-platforms.md",
+   "flag": "",
+   "summary": "Swift continues to grow as a cross-platform language supporting a wide variety of use cases from [programming embedded device](https://www.swift.org/blog/embedded-swift-examples/) to [server-side development](https://www.swift.org/documentation/server/) across a multitude of [operating systems](https://www.swift.org/documentation/articles/static-linux-getting-started.html). However, currently Swif"
+  },
+  {
+   "id": "SE-0483",
+   "title": "`InlineArray` Type Sugar",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0483-inline-array-sugar.md",
+   "flag": "",
+   "summary": "We propose the introduction of type sugar for the `InlineArray` type, providing more succinct syntax for declaring an inline array."
+  },
+  {
+   "id": "SE-0484",
+   "title": "Allow Additional Arguments to `@dynamicMemberLookup` Subscripts",
+   "state": "implemented",
+   "version": "6.5",
+   "link": "0484-allow-additional-args-to-dynamicmemberlookup-subscripts.md",
+   "flag": "",
+   "summary": "SE-0195 and SE-0252 introduced and refined `@dynamicMemberLookup` to provide type-safe \"dot\"-syntax access to arbitrary members of a type by reflecting the existence of certain `subscript(dynamicMember:)` methods on that type, turning"
+  },
+  {
+   "id": "SE-0485",
+   "title": "OutputSpan: delegate initialization of contiguous memory",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0485-outputspan.md",
+   "flag": "",
+   "summary": "Following the introduction of [`Span`](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0447-span-access-shared-contiguous-storage.md) and [`MutableSpan`](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0467-MutableSpan.md), this proposal adds a general facility for initialization of exclusively-borrowed memory with the `OutputSpan` and `OutputRawSpan` types. The m"
+  },
+  {
+   "id": "SE-0486",
+   "title": "Migration tooling for Swift features",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0486-adoption-tooling-for-swift-features.md",
+   "flag": "",
+   "summary": "Swift 5.8 introduced [upcoming features](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0362-piecemeal-future-features.md), which enabled piecemeal adoption of individual source-incompatible changes that are included in a language mode. Many upcoming features have a mechanical migration, meaning the compiler can determine the exact source changes necessary to allow the code to co"
+  },
+  {
+   "id": "SE-0487",
+   "title": "Nonexhaustive enums",
+   "state": "implemented",
+   "version": "6.2.3",
+   "link": "0487-extensible-enums.md",
+   "flag": "",
+   "summary": "This proposal provides developers the capabilities to mark public enums in non-resilient Swift libraries as extensible. This makes Swift `enum`s vastly more useful in public API of such libraries."
+  },
+  {
+   "id": "SE-0488",
+   "title": "Apply the extracting() slicing pattern more widely",
+   "state": "implemented",
+   "version": "6.2",
+   "link": "0488-extracting.md",
+   "flag": "",
+   "summary": "Slicing containers is an important operation, and non-copyable values have introduced a significant change in the spelling of that operation. When we [introduced](0437-noncopyable-stdlib-primitives.md) non-copyable primitives to the standard library, we allowed slicing `UnsafeBufferPointer` and related types via a family of `extracting()` methods. We expanded upon these when introducing [`MutableS"
+  },
+  {
+   "id": "SE-0489",
+   "title": "Improve `EncodingError` and `DecodingError`'s printed descriptions",
+   "state": "implemented",
+   "version": "6.3",
+   "link": "0489-codable-error-printing.md",
+   "flag": "",
+   "summary": "`EncodingError` and `DecodingError` do not specify any custom debug description. The default descriptions bury the useful information in a format that is difficult to read. Less experienced developers may assume they are not human-readable at all, even though they contain useful information. The proposal is to conform `EncodingError` and `DecodingError` to `CustomDebugStringConvertible` and provid"
+  },
+  {
+   "id": "SE-0491",
+   "title": "Module selectors for name disambiguation",
+   "state": "implemented",
+   "version": "6.3",
+   "link": "0491-module-selectors.md",
+   "flag": "",
+   "summary": "We propose that Swift's grammar be extended so that, wherever an identifier is written in source code to reference a declaration, it can be prefixed by `ModuleName::` to disambiguate which module the declaration is expected to come from. This syntax will provide a way to resolve several types of name ambiguities and conflicts."
+  },
+  {
+   "id": "SE-0492",
+   "title": "Section Placement Control",
+   "state": "implemented",
+   "version": "6.3",
+   "link": "0492-section-control.md",
+   "flag": "",
+   "summary": "This proposal adds `@section` and `@used` attributes which can be applied to global variables. These allow users to directly control which section of the resulting binary should global variables be emitted into, and give users the ability to disable DCE (dead code elimination) on those. The goal is to enable systems and embedded programming use cases like runtime discovery of test metadata from mu"
+  },
+  {
+   "id": "SE-0493",
+   "title": "Support `async` calls in `defer` bodies",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0493-defer-async.md",
+   "flag": "",
+   "summary": "This is a targeted proposal to introduce support for asynchronous calls within `defer` statements. Such calls must be marked with `await` as any other asynchronous call would be, and `defer` statements which do asynchronous work will be implicitly awaited at any relevant scope exit point."
+  },
+  {
+   "id": "SE-0494",
+   "title": "Add `isTriviallyIdentical(to:)` Methods for Quick Comparisons to Concrete Types",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0494-add-is-identical-methods.md",
+   "flag": "",
+   "summary": "We propose new `isTriviallyIdentical(to:)` instance methods to concrete types for quickly determining if two instances must be equal by-value."
+  },
+  {
+   "id": "SE-0495",
+   "title": "C compatible functions and enums",
+   "state": "implemented",
+   "version": "6.3",
+   "link": "0495-cdecl.md",
+   "flag": "",
+   "summary": "Implementing a C function in Swift eases integration of Swift and C code. This proposal introduces `@c` to mark Swift functions as callable from C, and enums as representable in C. It provides the same behavior under the `@objc` attribute for Objective-C compatible global functions."
+  },
+  {
+   "id": "SE-0496",
+   "title": "`@inline(always)` attribute",
+   "state": "implemented",
+   "version": "6.3",
+   "link": "0496-inline-always.md",
+   "flag": "",
+   "summary": "The Swift compiler performs an optimization that expands the body of a function into the caller called inlining. Inlining exposes the code in the callee to the code in the caller. After inlining, the Swift compiler has more context to optimize the code across caller and callee leading to better optimization in many cases. Inlining can increase code size. To avoid unnecessary code size increases, t"
+  },
+  {
+   "id": "SE-0497",
+   "title": "Controlling function definition visibility in clients",
+   "state": "implemented",
+   "version": "6.3",
+   "link": "0497-definition-visibility.md",
+   "flag": "",
+   "summary": "A number of compiler optimizations depend on whether a caller of a particular function can see the definition (body) of that function. If the caller has access to the definition, it can be specialized for the call site, for example by substituting in generic arguments, constant argument values, or any other information known at the call site that can affect how the function is compiled. The (poten"
+  },
+  {
+   "id": "SE-0498",
+   "title": "Expose demangle function in Runtime module",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0498-runtime-demangle.md",
+   "flag": "",
+   "summary": "Swift symbols are subject to name mangling. These mangled names then show up in backtraces and other profiling tools. Mangled names may look something like this `$sSS7cStringSSSPys4Int8VG_tcfC` and often end up visible to developers, unless they are demangled before displaying."
+  },
+  {
+   "id": "SE-0499",
+   "title": "Support ~Copyable, ~Escapable in simple standard library protocols",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0499-support-non-copyable-simple-protocols.md",
+   "flag": "",
+   "summary": "The following protocols will be marked as refining `~Copyable` and `~Escapable`:"
+  },
+  {
+   "id": "SE-0500",
+   "title": "Improving package creation with custom templates: SwiftPM Template Initialization",
+   "state": "accepted",
+   "version": "",
+   "link": "0500-package-manager-templates.md",
+   "flag": "",
+   "summary": "This proposal introduces a system that enables Swift packages to declare reusable templates with customizable logic for generating package code tailored to a user's specific use case. These templates can be distributed like any other Swift package and instantiated in a standardized, first-class manner using an enhanced `swift package init` command."
+  },
+  {
+   "id": "SE-0501",
+   "title": "HTML Coverage Report",
+   "state": "implemented",
+   "version": "6.5",
+   "link": "0501-swiftpm-html-coverage-report.md",
+   "flag": "",
+   "summary": "Currently, `swift test` supports generating a JSON coverage report, which is great for ingesting into various systems. The JSON, however, is not very \"human-readable\" during iterative development at-desk."
+  },
+  {
+   "id": "SE-0502",
+   "title": "Exclude private initialized properties from memberwise initializer",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0502-exclude-private-from-memberwise-init.md",
+   "flag": "",
+   "summary": "We propose changing the rules for the implicit memberwise initializer such that it does not include properties with initial values that are less accessible than the most accessible property in the initializer, up to `internal`. This ensures that the resulting memberwise initializer is not unnecessarily forced to be `private` when introducing a new `private` property with an initial value."
+  },
+  {
+   "id": "SE-0503",
+   "title": "Suppressed Default Conformances on Associated Types With Defaults",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0503-suppressed-associated-types.md",
+   "flag": "",
+   "summary": "An associated type defines a generic type in a protocol. You use them to help define the protocol's requirements. This Queue has two associated types, Element and Allocator:"
+  },
+  {
+   "id": "SE-0504",
+   "title": "Task Cancellation Shields",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0504-task-cancellation-shields.md",
+   "flag": "",
+   "summary": "This proposal introduces a new mechanism to temporarily \"ignore\" task cancellation, called task cancellation shields."
+  },
+  {
+   "id": "SE-0506",
+   "title": "Advanced Observation Tracking",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0506-advanced-observation-tracking.md",
+   "flag": "",
+   "summary": "Observation has one primary public entry point for observing the changes to `@Observable` types. This proposal adds two new versions that allow more fine-grained control and advanced behaviors. In particular, it is not intended to be a natural progression for all users of Observation, but instead a set of specialized tools for advanced use cases such as developing middleware infrastructure or the "
+  },
+  {
+   "id": "SE-0507",
+   "title": "Borrow and Mutate Accessors",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0507-borrow-accessors.md",
+   "flag": "",
+   "summary": "Borrowing accessors — introduced with the new keywords `borrow` and `mutate` — allow implementing computed properties and subscripts using *borrowing semantics*. These augment the existing `get`, `set`, `yielding borrow`, and `yielding mutate` accessors to complete the design described in the “Prospective Vision for Accessors”: https://forums.swift.org/t/prospective-vision-accessors/76707"
+  },
+  {
+   "id": "SE-0508",
+   "title": "Array expression trailing closures",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0508-array-expression-trailing-closures.md",
+   "flag": "",
+   "summary": "We add support for using trailing closures following array types in expressions."
+  },
+  {
+   "id": "SE-0509",
+   "title": "Software Bill of Materials (SBOM) Generation for Swift Package Manager",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0509-swift-sboms-via-swiftpm.md",
+   "flag": "",
+   "summary": "An SBOM (Software Bill of Materials) provides a detailed inventory of software components included in an artifact. SBOMs allow developers to improve and analyze the software supply chain security profile for their Swift projects (for example, determining whether a dependency that's being used has a vulnerability). Also, some companies, governments, and other regulatory bodies require SBOMs to be p"
+  },
+  {
+   "id": "SE-0510",
+   "title": "Introduce `Dictionary.mapKeyedValues`",
+   "state": "accepted",
+   "version": "",
+   "link": "0510-dictionary-mapvalues-with-keys.md",
+   "flag": "",
+   "summary": "I propose adding a method `Dictionary.mapKeyedValues` that passes the `Key` to the transformation closure."
+  },
+  {
+   "id": "SE-0511",
+   "title": "SwiftPM Add Target Plugin Command",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0511-swiftpm-add-target-plugin.md",
+   "flag": "",
+   "summary": "This proposal introduces a new `swift package add-target-plugin` command that allows developers to add plugin usages to existing targets in their `Package.swift` manifest directly from the command line."
+  },
+  {
+   "id": "SE-0512",
+   "title": "Document that `Mutex.withLockIfAvailable(_:)` cannot spuriously fail",
+   "state": "implemented",
+   "version": "6.0",
+   "link": "0512-withlockifavailable-cannot-spuriously-fail.md",
+   "flag": "",
+   "summary": "Modifies the documentation of [`Mutex.withLockIfAvailable(_:)`](https://developer.apple.com/documentation/synchronization/mutex/withlockifavailable(_:)) to add a guarantee that it is not subject to spurious failures. The implementation already cannot spuriously fail."
+  },
+  {
+   "id": "SE-0513",
+   "title": "API to get the path to the current executable",
+   "state": "accepted",
+   "version": "",
+   "link": "0513-commandline-executablepath.md",
+   "flag": "",
+   "summary": "This proposal adds to the Swift standard library an interface for reading the path to the currently-executing binary. This value is useful to developers who need to spawn additional processes or who need to present information about the current program to the user."
+  },
+  {
+   "id": "SE-0514",
+   "title": "`Hashable` Conformance for `Dictionary.Keys`, `CollectionOfOne` and `EmptyCollection`",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0514-hashable-conformance-for-dictionarykeys-collectionofone-emptycollection.md",
+   "flag": "",
+   "summary": "This proposal adds `Hashable` conformance to three standard library collection types: `Dictionary.Keys`, `CollectionOfOne` and `EmptyCollection`."
+  },
+  {
+   "id": "SE-0515",
+   "title": "Allow `reduce` to produce noncopyable results",
+   "state": "accepted",
+   "version": "",
+   "link": "0515-noncopyable-reduce.md",
+   "flag": "",
+   "summary": "A proposal to alter `Sequence.reduce(_:_:)` to:"
+  },
+  {
+   "id": "SE-0516",
+   "title": "`Iterable`",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0516-borrowing-sequence.md",
+   "flag": "",
+   "summary": "We propose a new protocol for iteration, `Iterable`, which provides a universal implementation point for synchronous iteration. Types conforming to `Iterable` can be noncopyable or nonescapable, can have noncopyable elements, and can throw during iteration. The Swift compiler will support use of this protocol via the familiar `for`-`in` syntax."
+  },
+  {
+   "id": "SE-0517",
+   "title": "UniqueBox",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0517-uniquebox.md",
+   "flag": "",
+   "summary": "We propose to introduce a new type in the standard library `UniqueBox` which is a smart pointer type that uniquely owns a value on the heap."
+  },
+  {
+   "id": "SE-0518",
+   "title": "`~Sendable` for explicitly marking non-`Sendable` types",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0518-tilde-sendable.md",
+   "flag": "",
+   "summary": "Introduces `~Sendable` conformance syntax to explicitly suppress a conformance to `Sendable`, which would prevent automatic `Sendable` inference on types, and provide an alternative way to mark types as non-`Sendable` without inheritance impact."
+  },
+  {
+   "id": "SE-0519",
+   "title": "`Ref` and `MutableRef` types for safe, first-class references",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0519-ref-mutableref-types.md",
+   "flag": "",
+   "summary": "Two new standard library types, `Ref` and `MutableRef`, represent safe references to another value, with shared (immutable) or exclusive (mutable) access respectively."
+  },
+  {
+   "id": "SE-0520",
+   "title": "Discardable result use in Task initializers",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0520-discardableresult-task-initializers.md",
+   "flag": "",
+   "summary": "Previously, `@discardableResult` was applied universally to all Task initializers, making it too easy to accidentally miss that a thrown error was ignored. We propose to introduce a new warning that will be applied to throwing Task initializers, in order to help developers not \"miss\" handling errors thrown by tasks."
+  },
+  {
+   "id": "SE-0521",
+   "title": "Improved Syntax for Optionals of Opaque and Existential Types",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0521-improved-optional-opaque-and-any.md",
+   "flag": "",
+   "summary": "Allows the types `some P?` and `any P?` to be written, having the same meaning as `(some P)?` and `(any P)?` respectively."
+  },
+  {
+   "id": "SE-0522",
+   "title": "Source-Level Control Over Compiler Warnings",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0522-source-warning-control.md",
+   "flag": "",
+   "summary": "This proposal introduces a new declaration attribute for controlling compiler warning behavior in specific code regions: to be emitted as warnings, errors, or suppressed."
+  },
+  {
+   "id": "SE-0523",
+   "title": "Hashable conformance for `UnownedTaskExecutor`",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0523-hashable-unownedtask-executor.md",
+   "flag": "",
+   "summary": "This proposal adds `Hashable` conformance to `UnownedTaskExecutor`, enabling its use as a dictionary key and in sets. `UnownedTaskExecutor` already conforms to `Equatable`; this is a natural and source-compatible extension of that conformance."
+  },
+  {
+   "id": "SE-0524",
+   "title": "Add `withTemporaryAllocation` using `Output(Raw)Span`",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0524-span-temporary-allocation.md",
+   "flag": "",
+   "summary": "This proposal introduces new top-level functions that provide a temporary buffer wrapped in an `OutputSpan` or `OutputRawSpan`. This enables safe initialization of temporary memory, leveraging the safety guarantees of these span types while utilizing the stack-allocation optimization of `withUnsafeTemporaryAllocation`."
+  },
+  {
+   "id": "SE-0525",
+   "title": "Safe loading API for `RawSpan`",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0525-rawspan-safe-loading-api.md",
+   "flag": "",
+   "summary": "We introduce a set of safe API to load and store values of certain safe types from the memory represented by `RawSpan`, `MutableSpan`, `MutableRawSpan` and `OutputRawSpan` instances. This will bolster the value of Swift in contexts where a process needs the ability to send data to other running processes via untyped buffers, as well as provide a set of building blocks for parsing utilities."
+  },
+  {
+   "id": "SE-0526",
+   "title": "withDeadline",
+   "state": "accepted",
+   "version": "",
+   "link": "0526-deadline.md",
+   "flag": "",
+   "summary": "This proposal introduces `withDeadline`, a function that executes asynchronous operations with a composable absolute time limit. The function accepts a continuous clock instant representing the deadline by which the operation must complete. If the operation completes before the deadline, the function returns the result; if the deadline expires first, the operation is cancelled."
+  },
+  {
+   "id": "SE-0527",
+   "title": "UniqueArray",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0527-rigidarray-uniquearray.md",
+   "flag": "",
+   "summary": "We propose to introduce two new array types to the Swift Standard Library, `RigidArray` and `UniqueArray`, that are both capable of storing noncopyable elements."
+  },
+  {
+   "id": "SE-0528",
+   "title": "`Continuation` — Safe and Performant Async Continuations",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0528-noncopyable-continuation.md",
+   "flag": "",
+   "summary": "While the new `Continuation` improves the ergonomics of continuations in a lot of places, we still rely on a runtime trap, if a continuation is dropped. Since we use a noncopyable type here, the compiler already injects deinit calls at the places where a continuation is dropped. We could consider adding a new mode for `~Copyable` types, that signals, that instead of adding `deinit`s the compiler e"
+  },
+  {
+   "id": "SE-0529",
+   "title": "Add `FilePath` to the Standard Library",
+   "state": "accepted",
+   "version": "",
+   "link": "0529-filepath-in-stdlib.md",
+   "flag": "",
+   "summary": "We propose adding `FilePath` and its essential operations to the Swift standard library. `FilePath` parses platform-specific path syntax on the developer's behalf, provides a normalized view of path components, and enables resolution against the filesystem. This proposal establishes the core types (`FilePath`, `FilePath.Anchor`, `FilePath.Component`, `FilePath.ComponentView`), their conformances, "
+  },
+  {
+   "id": "SE-0530",
+   "title": "Async Result Support",
+   "state": "implemented",
+   "version": "6.4",
+   "link": "0530-async-result-support.md",
+   "flag": "",
+   "summary": "The `Result` type is a very useful tool for managing code that can throw. However, it is missing an initializer that makes using the type with asynchronous code inconvenient."
+  },
+  {
+   "id": "SE-0531",
+   "title": "Literal Expressions",
+   "state": "accepted",
+   "version": "",
+   "link": "0531-literal-expressions.md",
+   "flag": "",
+   "summary": "Several language constructs in Swift require the use of integer literal values: generic value arguments ([SE-0452](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0452-integer-generic-parameters.md)), variables attributed with `@section` ([SE-0492](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0492-section-control.md)), and enum raw values. This proposal builds "
+  },
+  {
+   "id": "SE-0532",
+   "title": "`Optional` noncopyable improvements and generalizations",
+   "state": "accepted",
+   "version": "",
+   "link": "0532-optional-noncopyable-improvements.md",
+   "flag": "",
+   "summary": "Introduces two new properties and a new method on `Optional` to help support noncopyable wrapped values: `ref`, `mutableRef`, and `put()`. Also generalizes `map`, `flatMap`, and `unsafelyUnwrapped`."
+  },
+  {
+   "id": "SE-0535",
+   "title": "Add CLI for editing global mirrors configuration",
+   "state": "accepted",
+   "version": "",
+   "link": "0535-global-mirrors-configuration-cli.md",
+   "flag": "",
+   "summary": "SPM has support for both local (per-project) and shared (per-user) mirrors configuration, though the CLI only allows for editing the local configuration file. This proposal adds an optional `--global` flag to the existing CLI for editing the global configuration."
+  },
+  {
+   "id": "SE-0536",
+   "title": "Package Registry Search",
+   "state": "accepted",
+   "version": "",
+   "link": "0536-registry-search.md",
+   "flag": "",
+   "summary": "[SE-0292](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0292-package-registry-service.md) introduced a package registry service for the Swift ecosystem. Its future directions section identified package search as a natural extension of the registry service. This pitch proposes adding a search endpoint to the [package registry specification](https://github.com/swiftlang/swift-pack"
+  },
+  {
+   "id": "SE-0537",
+   "title": "Section Placement Control for Functions",
+   "state": "implemented",
+   "version": "6.5",
+   "link": "0537-function-sections.md",
+   "flag": "",
+   "summary": "This proposal extends the `@section` attribute introduced in [SE-0492](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0492-section-control.md) to also allow functions to be annotated with `@section`. This can be useful in embedded systems where some code (for example the boot code for firmware) needs to be in a particular section in the binary."
+  },
+  {
+   "id": "SE-0538",
+   "title": "Disconnected",
+   "state": "accepted",
+   "version": "",
+   "link": "0538-disconnected.md",
+   "flag": "",
+   "summary": "[SE-0414](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0414-region-based-isolation.md) introduced region-based isolation which leverages control flow sensitive diagnostics to determine whether non-`Sendable` values are safe to send across isolation boundaries. [SE-0430](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0430-transferring-parameters-and-results.md)"
+  },
+  {
+   "id": "SE-0540",
+   "title": "Default Target Settings",
+   "state": "accepted",
+   "version": "",
+   "link": "0540-default-target-settings.md",
+   "flag": "",
+   "summary": "It is very common for Swift packages to use the same settings flags across all their targets. A built-in mechanism to apply these base settings offers improved readability and convenience for package manifests."
+  },
+  {
+   "id": "SE-0541",
+   "title": "Flexible Swift/C Interoperability for Packages",
+   "state": "implemented",
+   "version": "6.5",
+   "link": "0541-flexible-swift-c-interoperability-for-packages.md",
+   "flag": "",
+   "summary": "Swift has great support for bidirectional interoperability with C, C++, and Objective-C, but historically SwiftPM has restricted the set of interop features available to package authors. This proposal lifts most of those restrictions, giving packages a new set of tools to organize their code."
+  },
+  {
+   "id": "SE-0543",
+   "title": "InlineArray: Hashable",
+   "state": "implemented",
+   "version": "6.5",
+   "link": "0543-inline-array-hashable.md",
+   "flag": "",
+   "summary": "InlineArray conditionally conforms to Equatable and Hashable when Element does."
+  },
+  {
+   "id": "SE-0544",
+   "title": "Mutation and consumption in non-`Copyable` type `deinit`s",
+   "state": "accepted",
+   "version": "",
+   "link": "0544-mutate-or-consume-in-deinit.md",
+   "flag": "",
+   "summary": "Non-`Copyable` types can define a `deinit` to clean up owned resources at the end of their lifetime; however, prior to this proposal, `self` was restricted to be immutable and borrowable only within the body of `deinit` up to this point. We propose to allow `deinit` to mutate and/or consume the fields of `self`, but still prevent the mutation or consumption of `self` as an entire value in order to"
+  },
+  {
+   "id": "SE-0545",
+   "title": "SwiftPM Build Performance Debugging Options",
+   "state": "implemented",
+   "version": "6.5",
+   "link": "0545-build-debugging-options.md",
+   "flag": "",
+   "summary": "This proposal introduces two new SwiftPM CLI options, `--trace-events-file` and `--enable-task-backtraces`, which can be used to analyze the performance of clean and incremental builds and identify common issues."
+  },
+  {
+   "id": "SE-0546",
+   "title": "Same-file memberwise initializer extensions",
+   "state": "accepted",
+   "version": "",
+   "link": "0546-memberwise-init-extensions.md",
+   "flag": "",
+   "summary": "Allows a struct's memberwise initializer to be defined in a same-file extension."
+  },
+  {
+   "id": "SE-0547",
+   "title": "SwiftPM Support for Compilation Caching",
+   "state": "implemented",
+   "version": "6.5",
+   "link": "0547-swiftpm-compilation-caching.md",
+   "flag": "",
+   "summary": "The Swift and Clang compilers have existing support for leveraging a CAS (Content Addressable Store) to cache compilation outputs and replay them in subsequent builds. This proposal introduces support for configuring compilation caching in SwiftPM on a per-build, per-package, or global basis."
+  },
+  {
+   "id": "SE-0548",
+   "title": "resignRemoteID for remote distributed actor references",
+   "state": "implemented",
+   "version": "6.5",
+   "link": "0548-resign-remote-id.md",
+   "flag": "",
+   "summary": "Distributed actors have their identity managed by an associated `DistributedActorSystem`. Today, the system observes the lifecycle of *local* distributed actor instances through the `assignID(_:)` / `resignID(_:)` pair, and participates in the *creation* of remote references through `resolve(id:as:)`. There is no way to observe when a remote reference has been deinitialized."
+  },
+  {
+   "id": "SE-0549",
+   "title": "Package Manager HTTP Proxy Configuration",
+   "state": "activeReview",
+   "version": "",
+   "link": "0549-swiftpm-proxy-configuration.md",
+   "flag": "",
+   "summary": "This proposal adds HTTP and HTTPS proxy support for all network operations performed by Swift Package Manager that use its built-in HTTP client. Today, SPM ignores standard proxy environment variables (`http_proxy`, `https_proxy`, `no_proxy`) for these operations, making it impossible to use SPM behind corporate firewalls or in environments that require proxy routing. This proposal introduces a co"
+  },
+  {
+   "id": "SE-0550",
+   "title": "@instrumentation attribute for functions",
+   "state": "accepted",
+   "version": "",
+   "link": "0550-nosanitize-attribute.md",
+   "flag": "",
+   "summary": "This proposal introduces a new attribute `@instrumentation(...)` which can be applied to functions, subscripts, and closures to disable one or more kinds of compiler-inserted instrumentation (such as sanitizers). It also introduces a `moduleInstrumentation(<kind>)` compilation condition, which evaluates to true if the specific instrumentation is enabled for the module being compiled."
+  },
+  {
+   "id": "SE-0551",
+   "title": "`Span` over a single value",
+   "state": "implemented",
+   "version": "6.5",
+   "link": "0551-span-of-one.md",
+   "flag": "",
+   "summary": "Add initializers to form a single-element `Span` over any value, and to form a single-element `MutableSpan` over any mutable value."
+  },
+  {
+   "id": "SE-0552",
+   "title": "Rounding of `Float.pi`",
+   "state": "implemented",
+   "version": "6.5",
+   "link": "0552-float-pi-rounding.md",
+   "flag": "",
+   "summary": "Change the definition of the property `pi` on `FloatingPoint`, so that it is no longer required to be rounded toward zero. Update `Float.pi` to match the new definition."
+  },
+  {
+   "id": "SE-0553",
+   "title": "Task Identity",
+   "state": "accepted",
+   "version": "",
+   "link": "0553-task-identity.md",
+   "flag": "",
+   "summary": "Adds a cheap, stable, process-unique identifier for the currently executing `Task`. `Task.currentID`, with instance accessors on `Task` and `UnsafeCurrentTask`, returns an opaque `Task.ID` at a cost comparable to a thread-local read — enabling always-on instrumentation like tracing and structured logging on the hot path. The identifier is intended for attributing observations and per-task state to"
+  },
+  {
+   "id": "SE-0555",
+   "title": "`inout` overload of `BorrowingIteratorProtocol.skip(by:)`",
+   "state": "accepted",
+   "version": "",
+   "link": "0555-iterable-inout-skip.md",
+   "flag": "",
+   "summary": "Adds a new overload of the `BorrowingIteratorProtocol.skip(by:)` method that takes its argument as an `inout Int`. Unlike the existing method, which reports a count only when it returns normally, the new overload tells the caller how many elements are still to be skipped even when the iterator throws an error."
+  },
+  {
+   "id": "SE-0556",
+   "title": "Cell, ConstCell, and Volatile",
+   "state": "activeReview",
+   "version": "",
+   "link": "0556-cell.md",
+   "flag": "",
+   "summary": "Introduces a family of `Cell` types that provide looser requirements around exclusivity, making them suitable for shared memory, synchronization primitives, concurrent data structures, and interoperability with other languages."
+  },
+  {
+   "id": "SE-0557",
+   "title": "Add `RawSpan` primitive to `Hasher`",
+   "state": "accepted",
+   "version": "",
+   "link": "0557-hasher-rawspan-primitive.md",
+   "flag": "",
+   "summary": "Adds a new primitive API to `Hasher` for mixing the bytes of a `RawSpan` into the hasher's state."
+  },
+  {
+   "id": "SE-0558",
+   "title": "Bulk update operations for `MutableSpan` and `MutableRawSpan`",
+   "state": "activeReview",
+   "version": "",
+   "link": "0558-mutablespan-bulk-updates.md",
+   "flag": "",
+   "summary": "Adds bulk update operations to `MutableSpan` and `MutableRawSpan`, which overwrite a span (or a subrange thereof) with a repeated value, or with the elements of another span or an `Iterable`."
+  },
+  {
+   "id": "SE-0559",
+   "title": "Add `bidiClass` to `Unicode.Scalar.Properties`",
+   "state": "activeReview",
+   "version": "",
+   "link": "0559-unicode-bidi-class.md",
+   "flag": "",
+   "summary": "Adds a `bidiClass` property to `Unicode.Scalar.Properties` that returns a scalar's Unicode `Bidi_Class`, along with a new `Unicode.BidiClass` type to represent its values."
+  },
+  {
+   "id": "SE-0560",
+   "title": "Build configuration conditionals for target dependencies",
+   "state": "activeReview",
+   "version": "",
+   "link": "0560-swiftpm-build-configuration-conditional-target-dependencies.md",
+   "flag": "",
+   "summary": "This proposal introduces the ability for Swift package authors to conditionalize target dependencies on build configuration. It completes the unimplemented part of [SE-0273](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0273-swiftpm-conditional-target-dependencies.md)."
+  },
+  {
+   "id": "SE-0561",
+   "title": "Span-based access to `Optional`'s storage",
+   "state": "activeReview",
+   "version": "",
+   "link": "0561-optional-span-access.md",
+   "flag": "",
+   "summary": "Adds `span` and `mutableSpan` computed properties to `Optional`. They provide in-place access to the wrapped value as a one-element `Span` or `MutableSpan`, or as an empty span when there is no wrapped value. Also adds an `edit` function that provides access to the storage through the `OutputSpan` parameter of a closure, allowing a wrapped value to be added, replaced or removed."
+  },
+  {
+   "id": "SE-0562",
+   "title": "Ownership for Subscript Parameters",
+   "state": "activeReview",
+   "version": "",
+   "link": "0562-subscript-ownership-parameters.md",
+   "flag": "",
+   "summary": "This proposal introduces support for `inout`, `borrowing`, and `consuming` on parameters of subscripts. It brings the capabilities of subscript parameters in line with functions and initializers."
+  },
+  {
+   "id": "SE-0563",
+   "title": "Improve Interaction Between `@main` and Top-Level Code",
+   "state": "activeReview",
+   "version": "",
+   "link": "0563-improve-interaction-between-at-main-and-top-level-code.md",
+   "flag": "",
+   "summary": "The current rules which determine if a source file is parsed as top-level code are hard to understand and often cause confusing errors to be reported when adopting `@main`. This proposal describes a source compatible change which disables top-level code parsing in sources where it's very likely the user did not intend to use this mode."
+  },
+  {
+   "id": "SE-0564",
+   "title": "Split continuations",
+   "state": "activeReview",
+   "version": "",
+   "link": "0564-split-continuations.md",
+   "flag": "",
+   "summary": "Introduces a new form of `withContinuation` whose body is `async` and receives both halves of a continuation: the existing `Continuation` that is used to resume and a new `ContinuationWaiter` that is used to wait. Waiting on the waiter can install cancellation and priority escalation handlers that are only active while the task is suspended on the continuation."
+  },
+  {
+   "id": "SE-0565",
+   "title": "SE-0565: Allow Deprecating Package Products",
+   "state": "activeReview",
+   "version": "",
+   "link": "0565-swiftpm-allow-deprecating-package-products.md",
+   "flag": "",
+   "summary": "Package authors currently have no first-class way to signal that a product vended from a Swift package is on a path to removal. Swift Package Manager (SwiftPM) supports rich deprecation semantics for Swift source APIs through `@available(*, deprecated, ...)`, but a `Package.swift` manifest cannot express that same intent for a `.library`, `.executable`, or `.plugin` product."
+  },
+  {
+   "id": "SE-0566",
+   "title": "Infer generic arguments of result builder attributes",
+   "state": "activeReview",
+   "version": "",
+   "link": "0566-infer-result-builder-generics.md",
+   "flag": "",
+   "summary": "We should enable generic result builders to be used as attributes without needing to explicitly specify generic arguments, instead allowing them to be inferred."
+  }
+ ]
+}
