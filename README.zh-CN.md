@@ -7,6 +7,7 @@
 Swift 6.0 → 6.4（2024.09 – 2026.09）两年新特性的互动学习站，做成了一张地铁线路图：
 
 - **6 条主题线路** × **5 个版本“票价区”**，共 80 个特性站
+- **上车前（5.x）**：8 个基础站，讲 `async`/`await`、任务、actor、`@MainActor`、`Sendable` 和续体（Swift 5.5 – 5.10），按 Swift 6 语言模式来教。它们在并发线上排在 6.0 之前，不计入新特性
 - 每一站：一句话讲清楚、新旧代码对比、**真实的编译器输出**、部分配有小测
 - **3 个实验室**：并发执行轨迹（nonisolated / nonsending / @concurrent）、所有权沙盒（~Copyable）、内存布局（Array / InlineArray / Span）
 - **编译器猜猜看**：17 段代码，标准答案由编译器给出
@@ -44,6 +45,7 @@ Swift 6.0 → 6.4（2024.09 – 2026.09）两年新特性的互动学习站，�
 content/
   languages.json           语言列表，以及默认语言
   en/  zh/                 每种语言一个文件夹
+    5.x.md                   “上车前”基础区（在 site.json 里标记为 `"prelude": true`）
     6.0.md … 6.4.md          各版本的特性（Markdown 风格的自定义格式）
     challenges.md            编译器猜猜看
     labs.md                  实验室用到的代码与步骤
@@ -56,7 +58,7 @@ assets/
   data.en.js  data.zh.js   构建生成的数据，每种语言一个
 tools/
   build.mjs                构建脚本
-  evolution-snapshot.json  Swift Evolution 提案索引快照（6.0+）
+  evolution-snapshot.json  Swift Evolution 提案索引快照（6.0+），外加课程里引用的少数更早的提案
 dist/swift-club.html       单文件发布版，内联了所有语言
 ```
 

@@ -1407,5 +1407,84 @@
    "flag": "",
    "summary": "We should enable generic result builders to be used as attributes without needing to explicitly specify generic arguments, instead allowing them to be inferred."
   }
+ ],
+ "earlier": [
+  {
+   "id": "SE-0296",
+   "title": "Async/await",
+   "state": "implemented",
+   "version": "5.5",
+   "link": "0296-async-await.md"
+  },
+  {
+   "id": "SE-0300",
+   "title": "Continuations for interfacing async tasks with synchronous code",
+   "state": "implemented",
+   "version": "5.5",
+   "link": "0300-continuation.md"
+  },
+  {
+   "id": "SE-0302",
+   "title": "`Sendable` and `@Sendable` closures",
+   "state": "implemented",
+   "version": "5.7",
+   "link": "0302-concurrent-value-and-concurrent-closures.md"
+  },
+  {
+   "id": "SE-0304",
+   "title": "Structured concurrency",
+   "state": "implemented",
+   "version": "5.5",
+   "link": "0304-structured-concurrency.md"
+  },
+  {
+   "id": "SE-0306",
+   "title": "Actors",
+   "state": "implemented",
+   "version": "5.5",
+   "link": "0306-actors.md"
+  },
+  {
+   "id": "SE-0313",
+   "title": "Improved control over actor isolation",
+   "state": "implemented",
+   "version": "5.5",
+   "link": "0313-actor-isolation-control.md"
+  },
+  {
+   "id": "SE-0316",
+   "title": "Global actors",
+   "state": "implemented",
+   "version": "5.5",
+   "link": "0316-global-actors.md"
+  },
+  {
+   "id": "SE-0317",
+   "title": "`async let` bindings",
+   "state": "implemented",
+   "version": "5.5",
+   "link": "0317-async-let.md"
+  },
+  {
+   "id": "SE-0337",
+   "title": "Incremental migration to concurrency checking",
+   "state": "implemented",
+   "version": "5.6",
+   "link": "0337-support-incremental-migration-to-concurrency-checking.md"
+  },
+  {
+   "id": "SE-0338",
+   "title": "Clarify the Execution of Non-Actor-Isolated Async Functions",
+   "state": "implemented",
+   "version": "5.7",
+   "link": "0338-clarify-execution-non-actor-async.md"
+  },
+  {
+   "id": "SE-0412",
+   "title": "Strict concurrency for global variables",
+   "state": "implemented",
+   "version": "5.10",
+   "link": "0412-strict-concurrency-for-global-variables.md"
+  }
  ]
 }

@@ -8,6 +8,7 @@
     { "id": 6, "name": "工具与测试", "en": "Tooling & Testing", "desc": "Swift Testing、SwiftPM、按分组控制警告、迁移工具与新的构建系统。" }
   ],
   "releases": [
+    { "version": "5.x", "file": "5.x.md", "prelude": true },
     { "version": "6.0", "file": "6.0.md" },
     { "version": "6.1", "file": "6.1.md" },
     { "version": "6.2", "file": "6.2.md" },
@@ -20,6 +21,7 @@
       "name": "并发通勤快线",
       "who": "写 App 的你：先把 Swift 6 并发彻底搞懂",
       "time": "约 90 分钟",
+      "warmup": "5.x",
       "stops": ["swift6-mode", "region-sending", "synchronization", "nonisolated-types", "default-isolation", "nonsending", "concurrent", "isolated-conformances", "task-immediate", "async-defer", "cancel-shield"]
     },
     {

@@ -8,6 +8,7 @@
     { "id": 6, "name": "Tooling & Testing", "desc": "Swift Testing, SwiftPM, per-group warning control, migration tooling, and the new build system." }
   ],
   "releases": [
+    { "version": "5.x", "file": "5.x.md", "prelude": true },
     { "version": "6.0", "file": "6.0.md" },
     { "version": "6.1", "file": "6.1.md" },
     { "version": "6.2", "file": "6.2.md" },
@@ -20,6 +21,7 @@
       "name": "Concurrency Express",
       "who": "For app developers: finally get Swift 6 concurrency straight",
       "time": "About 90 min",
+      "warmup": "5.x",
       "stops": ["swift6-mode", "region-sending", "synchronization", "nonisolated-types", "default-isolation", "nonsending", "concurrent", "isolated-conformances", "task-immediate", "async-defer", "cancel-shield"]
     },
     {

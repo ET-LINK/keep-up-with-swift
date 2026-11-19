@@ -134,7 +134,9 @@ function compile({ code, flags, mode, script, testing, prelude }) {
 // ───────────────────────── Inline Markdown ─────────────────────────
 
 const evo = JSON.parse(read('tools/evolution-snapshot.json'));
-const proposalById = new Map(evo.proposals.map((p) => [p.id, p]));
+// `proposals` (6.0 and later) feed the proposal index; `earlier` holds the few pre-6.0 proposals that
+// lessons cite (the 5.x prelude zone, for example), so that their links and titles resolve too.
+const proposalById = new Map([...(evo.earlier || []), ...evo.proposals].map((p) => [p.id, p]));
 const proposalUrl = (id) => {
   const p = proposalById.get(id);
   return p ? `https://github.com/swiftlang/swift-evolution/blob/main/proposals/${p.link}` : `https://github.com/swiftlang/swift-evolution`;
@@ -325,7 +327,8 @@ function buildLanguage(language) {
   const releases = [];
   const features = [];
 
-  for (const file of site.releases.map((r) => r.file)) {
+  if (site.releases.filter((r) => r.prelude).length > 1) problems.push(`${tag} site.json: only one release entry may be the prelude zone`);
+  for (const { file, prelude: isPreludeZone } of site.releases) {   // (not to be confused with a code block's `prelude` support file)
     const src = read(`${dir}/${file}`);
     const fm = /^---\n([\s\S]*?)\n---\n/.exec(src);
     if (!fm) throw new Error(`${dir}/${file}: missing frontmatter`);
@@ -337,6 +340,9 @@ function buildLanguage(language) {
       version: rmeta.version, id: 'v' + rmeta.version.replace(/\./g, ''), date: rmeta.date, title: rmeta.title,
       subtitle: rmeta.subtitle || '', summary: inline(rmeta.summary || ''), blog: rmeta.blog || '', features: [],
     };
+    // The prelude zone (5.x basics) sits on the map before 6.0 but isn't a release: its stations
+    // aren't counted as new features.
+    if (isPreludeZone) rel.prelude = true;
     for (const part of parts) {
       const lines = part.split('\n');
       const id = lines[0].trim();
@@ -363,6 +369,9 @@ function buildLanguage(language) {
       rel.features.push(id);
     }
     releases.push(rel);
+  }
+  for (const r of site.routes) {
+    if (r.warmup && !releases.some((rel) => rel.prelude && rel.version === r.warmup)) problems.push(`${tag} site.json › route ${r.id}: warmup "${r.warmup}" is not a prelude zone`);
   }
 
   // ───────────── Guess the Compiler ─────────────
@@ -469,8 +478,8 @@ function skeleton(bundle) {
   for (const c of bundle.challenges) sig.set(`challenge ${c.id}`, [c.related, c.flags, verdict(c.answer)].join('|'));
   for (const [id, l] of Object.entries(bundle.labs)) sig.set(`lab ${id}`, [l.flags, verdict(l.result?.status), (l.steps || []).map((s) => `${s.lane}:${s.mark}`).join(',')].join('|'));
   for (const l of bundle.lines) sig.set(`line ${l.id}`, '');
-  for (const r of bundle.routes) sig.set(`route ${r.id}`, r.stops.join(','));
-  sig.set('releases', bundle.releaseInfo.map((r) => `${r.version}:${r.file}`).join(','));
+  for (const r of bundle.routes) sig.set(`route ${r.id}`, `${r.stops.join(',')}|${r.warmup || ''}`);
+  sig.set('releases', bundle.releaseInfo.map((r) => `${r.version}:${r.file}${r.prelude ? ':prelude' : ''}`).join(','));
   return sig;
 }
 
@@ -589,7 +598,10 @@ ${app.replace(/<\/script/gi, '<\\/script')}
 
 const kb = (p) => (fs.statSync(path.join(ROOT, p)).size / 1024).toFixed(0) + ' KB';
 for (const b of bundles) {
-  console.log(`✓ [${b.lang}] ${b.releases.length} releases · ${b.features.length} features · ${b.challenges.length} challenges · ${b.meta.verified} code blocks verified by the compiler · assets/data.${b.lang}.js ${kb(`assets/data.${b.lang}.js`)}`);
+  const prelude = b.releases.filter((r) => r.prelude);
+  const basics = prelude.reduce((n, r) => n + r.features.length, 0);
+  const zones = `${b.releases.length - prelude.length} releases${prelude.length ? ` + ${prelude.map((r) => r.version).join(', ')} prelude` : ''}`;
+  console.log(`✓ [${b.lang}] ${zones} · ${b.features.length - basics} features${basics ? ` + ${basics} basics` : ''} · ${b.challenges.length} challenges · ${b.meta.verified} code blocks verified by the compiler · assets/data.${b.lang}.js ${kb(`assets/data.${b.lang}.js`)}`);
 }
 console.log(`  compiled ${compiled} new, ${fromCache} from cache · dist/swift-club.html ${kb('dist/swift-club.html')}`);
 console.log(`  compiler: ${baseBundle.meta.compiler}`);

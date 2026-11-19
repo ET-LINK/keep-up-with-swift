@@ -64,6 +64,8 @@
   "home.continue": "Continue: {title}",
   "home.startAt": "Start at {version}",
   "home.tryLab": "Try the concurrency lab first",
+  "home.prelude_one": "New to `async`/`await`, actors, and `Sendable`? Board at {version} first: {n} basics station",
+  "home.prelude_other": "New to `async`/`await`, actors, and `Sendable`? Board at {version} first: {n} basics stations",
   "home.stat.releases": "releases ({range})",
   "home.stat.stations": "feature stations",
   "home.stat.verified": "snippets compiled for real",
@@ -86,8 +88,12 @@
   "route.done": "{done}/{total} done",
   "route.continue": "Continue",
   "route.start": "Start",
+  "route.warmup_one": "New to concurrency? Ride the {n} basics station at {version} first",
+  "route.warmup_other": "New to concurrency? Ride the {n} basics stations at {version} first",
   "board.features_one": "{n} feature",
   "board.features_other": "{n} features",
+  "board.basics_one": "{n} basics station",
+  "board.basics_other": "{n} basics stations",
   "board.punched": "{done}/{total} punched",
 
   "labCard.concurrency.title": "Concurrency Trace",
@@ -117,6 +123,12 @@
   "rel.end": "Terminus",
   "rel.endNote": "You've ridden all five releases",
   "rel.endCta": "Try Guess the Compiler",
+
+  "prelude.navTitle": "Before you board: concurrency basics from Swift 5.x",
+  "prelude.years": "2021 – 2024",
+  "prelude.eyebrow_one": "Swift 5.5 – 5.10 · Basics, not new features · {n} station",
+  "prelude.eyebrow_other": "Swift 5.5 – 5.10 · Basics, not new features · {n} stations",
+  "prelude.book": "The Swift book: Concurrency",
 
   "labs.eyebrow": "Hands-on",
   "labs.title": "Labs",
@@ -280,6 +292,7 @@
   "pass.clearConfirm": "Click again to confirm",
   "pass.byLine": "Progress by line",
   "pass.punchedSuffix": " (punched)",
+  "pass.preludeNote": "The {version} basics have their own row and don't count toward the percentage.",
 
   "foot.about": "**Swift Club · Evolution Line Map**: an unofficial learning site for the new features in Swift 6.0 – 6.4.",
   "foot.verified": "Every example was verified at build time by `{compiler}` ({date}). Proposal data comes from the official [Swift Evolution](https://www.swift.org/swift-evolution/) index; release highlights follow the release notes on swift.org.",

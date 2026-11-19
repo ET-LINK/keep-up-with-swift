@@ -39,7 +39,7 @@
 
   // ───────────────────────── Current language ─────────────────────────
   let lang, D, UI, PLURAL;
-  let LINES, FEATURES, FMAP, RELEASES, RMAP, ORDER;
+  let LINES, FEATURES, FMAP, ZONES, RELEASES, PRELUDE, NEWF, RMAP, ORDER;
   let searchIndex = [];
   let learned = new Set();
   let firstRide = null;
@@ -69,7 +69,7 @@
   };
   const levelName = (level) => t('level.' + level);
   const swiftVersion = () => (/Swift version ([\d.]+)/.exec(D.meta.compiler) || [])[1] || D.meta.compiler;
-  const relOf = (f) => RELEASES.find((r) => r.version === f.release);
+  const relOf = (f) => ZONES.find((r) => r.version === f.release);
 
   /** Make a loaded bundle the current one and rebuild everything derived from it. */
   function useBundle(code) {
@@ -80,11 +80,16 @@
     LINES = new Map(D.lines.map((l) => [l.id, l]));
     FEATURES = D.features;
     FMAP = new Map(FEATURES.map((f) => [f.id, f]));
-    RELEASES = D.releases;
-    RMAP = new Map(RELEASES.map((r) => [r.id, r]));
-    ORDER = RELEASES.flatMap((r) => r.features);
+    // Zones are the map's columns: the "before you board" prelude (5.x basics) first, then the releases.
+    // The prelude's stations are lessons too, but they don't count as new features.
+    ZONES = D.releases;
+    RELEASES = ZONES.filter((r) => !r.prelude);
+    PRELUDE = ZONES.find((r) => r.prelude) || null;
+    NEWF = RELEASES.flatMap((r) => r.features).map((id) => FMAP.get(id));
+    RMAP = new Map(ZONES.map((r) => [r.id, r]));
+    ORDER = ZONES.flatMap((r) => r.features);
     searchIndex = [
-      ...FEATURES.map((f) => ({ kind: 'f', f, hay: [f.plainTitle, f.en, f.short, f.tags, text(f.tldr), f.se.map((s) => s.id + ' ' + s.id.slice(3)).join(' '), f.flag, 'swift ' + f.release].join(' ').toLowerCase() })),
+      ...FEATURES.map((f) => ({ kind: 'f', f, hay: [f.plainTitle, f.en, f.short, f.tags, text(f.tldr), f.se.map((s) => s.id + ' ' + s.id.slice(3)).join(' '), f.flag, 'swift ' + f.release, 'swift ' + f.since].join(' ').toLowerCase() })),
       ...D.proposals.map((p) => ({ kind: 'p', p, hay: (p.id + ' ' + p.id.slice(3) + ' ' + p.title + ' ' + (p.flag || '')).toLowerCase() })),
     ];
   }
@@ -509,7 +514,7 @@
   }
 
   function renderNav() {
-    const rel = RELEASES.map((r) => `<a href="#${r.id}" data-key="${r.id}"><span class="v">${r.version}</span></a>`).join('');
+    const rel = ZONES.map((r) => `<a href="#${r.id}" data-key="${r.id}"${r.prelude ? ` class="pre" title="${esc(t('prelude.navTitle'))}"` : ''}><span class="v">${r.version}</span></a>`).join('');
     $('#nav').innerHTML = `<a href="#map" data-key="map">${esc(t('nav.map'))}</a><span class="sep"></span>${rel}<span class="sep"></span>
       <a href="#labs" data-key="labs">${esc(t('nav.labs'))}</a><a href="#quiz" data-key="quiz">${esc(t('nav.quiz'))}</a><a href="#index" data-key="index">${esc(t('nav.index'))}</a><a href="#pass" data-key="pass">${esc(t('nav.pass'))}</a>`;
   }
@@ -543,7 +548,7 @@
   function viewHome() {
     const verified = D.meta.verified;
     const last = lastFeature();
-    const total = FEATURES.length;
+    const total = NEWF.length;
     const v0 = RELEASES[0].version, v1 = RELEASES[RELEASES.length - 1].version;
     main.innerHTML = `
     <section class="hero">
@@ -557,6 +562,7 @@
                    : `<a class="btn primary" href="#v60">${esc(t('home.startAt', { version: v0 }))} →</a>`}
             <a class="btn" href="#lab-concurrency">${esc(t('home.tryLab'))}</a>
           </div>
+          ${PRELUDE ? `<a class="hero-pre" href="#${PRELUDE.id}"><span class="pre-dot" aria-hidden="true"></span><span>${th('home.prelude', { n: PRELUDE.features.length, version: PRELUDE.version })} →</span></a>` : ''}
         </div>
         <div>
           <div class="stats">
@@ -585,7 +591,7 @@
     <section class="section">
       <div class="wrap">
         <div class="section-head"><div><div class="eyebrow">${esc(t('home.board.eyebrow'))}</div><h2>${esc(t('home.board.title'))}</h2></div><p>${esc(t('home.board.lead'))}</p></div>
-        <div class="board">${RELEASES.map(boardRow).join('')}</div>
+        <div class="board">${ZONES.map(boardRow).join('')}</div>
       </div>
     </section>
     <section class="section">
@@ -606,9 +612,11 @@
     const stops = r.stops.map((id) => FMAP.get(id)).filter(Boolean);
     const done = stops.filter((f) => learned.has(f.id)).length;
     const nextStop = stops.find((f) => !learned.has(f.id)) || stops[0];
+    const warm = r.warmup ? ZONES.find((z) => z.prelude && z.version === r.warmup) : null;
     return `<article class="route">
       <div class="route-head"><span class="route-badge">${esc(r.id)}</span><h3>${esc(r.name)}</h3></div>
       <p class="who">${esc(r.who)}</p>
+      ${warm ? `<a class="route-pre" href="#${warm.id}"><span class="pre-dot" aria-hidden="true"></span><span>${esc(t('route.warmup', { n: warm.features.length, version: warm.version }))} →</span></a>` : ''}
       <ol class="route-stops">${stops.map((f) => `<li class="${learned.has(f.id) ? 'done' : ''}" data-line="${f.line}"><span class="stop-dot"></span><a href="#f-${f.id}">${esc(f.short)}</a><span class="stop-ver">${f.release}</span></li>`).join('')}</ol>
       <div class="route-foot"><span>${esc(r.time)} · ${esc(t('route.done', { done, total: stops.length }))}</span><a class="btn small" href="#f-${nextStop.id}">${esc(t(done ? 'route.continue' : 'route.start'))} →</a></div>
     </article>`;
@@ -618,10 +626,10 @@
     const feats = r.features.map((id) => FMAP.get(id));
     const lines = [...new Set(feats.map((f) => f.line))].sort();
     const done = feats.filter((f) => learned.has(f.id)).length;
-    return `<a class="board-row" href="#${r.id}">
+    return `<a class="board-row${r.prelude ? ' pre' : ''}" href="#${r.id}">
       <span class="board-ver">${r.version}</span>
-      <span class="board-date">${esc(fmtDate(r.date))}<span>${esc(r.subtitle)}</span></span>
-      <span class="board-title"><b>${esc(r.title)}</b><span>${esc(t('board.features', { n: feats.length }))} · ${lines.map((l) => `<span class="bullet sm" data-line="${l}" style="display:inline-grid;vertical-align:-3px;margin-right:2px">${l}</span>`).join('')}</span></span>
+      <span class="board-date">${esc(r.prelude ? t('prelude.years') : fmtDate(r.date))}<span>${esc(r.subtitle)}</span></span>
+      <span class="board-title"><b>${esc(r.title)}</b><span>${esc(t(r.prelude ? 'board.basics' : 'board.features', { n: feats.length }))} · ${lines.map((l) => `<span class="bullet sm" data-line="${l}" style="display:inline-grid;vertical-align:-3px;margin-right:2px">${l}</span>`).join('')}</span></span>
       <span class="board-prog"><span>${esc(t('board.punched', { done, total: feats.length }))}</span><span class="meter"><i style="width:${(done / feats.length) * 100}%"></i></span></span>
       <span class="board-go" aria-hidden="true">→</span>
     </a>`;
@@ -666,17 +674,19 @@
     mapCompact = compact;
     box.dataset.lang = lang;
     const STEP = compact ? 35 : 43, ROW = compact ? 86 : 98, TOP = compact ? 70 : 80, GUT = compact ? 150 : 186, PAD = compact ? 16 : 22;
-    const grid = RELEASES.map((r) => {
+    const grid = ZONES.map((r) => {
       const by = {};
       for (const id of r.features) { const f = FMAP.get(id); (by[f.line] ||= []).push(f); }
       return by;
     });
     // A column is as wide as its busiest line needs, and never narrower than its "Sep 2024 · 15 stations" caption.
-    const caption = (r) => `${fmtDate(r.date, 'month')} · ${t('map.stations', { n: r.features.length })}`;
+    // The prelude column says "Before you board · 8 stations" instead of a date.
+    const caption = (r) => `${r.prelude ? r.subtitle : fmtDate(r.date, 'month')} · ${t('map.stations', { n: r.features.length })}`;
     const colW = grid.map((by, i) => Math.max(
       Math.max(2, ...D.lines.map((l) => (by[l.id] || []).length)) * STEP + PAD * 2,
-      Math.ceil(labelWidth(caption(RELEASES[i]), 6.1, 12)) + PAD + 10,
+      Math.ceil(labelWidth(caption(ZONES[i]), 6.1, 12)) + PAD + 10,
     ));
+    const firstRel = ZONES.findIndex((r) => !r.prelude);   // tracks turn solid where the releases begin
     const colX = [];
     let x = GUT;
     for (const w of colW) { colX.push(x); x += w; }
@@ -687,16 +697,24 @@
     const hereText = t('map.here');
     const hereW = Math.round(16 + labelWidth(hereText, 6.4, 11));
     let s = `<svg class="map-svg${dimLine ? ' dimmed' : ''}" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="group" aria-label="${esc(t('map.aria', { from: RELEASES[0].version, to: RELEASES[RELEASES.length - 1].version }))}">`;
-    RELEASES.forEach((r, i) => {
-      if (i % 2 === 0) s += `<rect class="zone" x="${colX[i]}" y="0" width="${colW[i]}" height="${H}"/>`;
-      s += `<a class="ver-link" href="#${r.id}" aria-label="Swift ${r.version}"><text class="ver-label" x="${colX[i] + PAD - 4}" y="${compact ? 30 : 36}">${r.version}</text><text class="ver-date" x="${colX[i] + PAD - 3}" y="${compact ? 48 : 56}">${esc(caption(r))}</text></a>`;
+    if (PRELUDE) s += '<defs><pattern id="preHatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect class="hatch-bg" width="10" height="10"/><line class="hatch" x1="0" y1="0" x2="0" y2="10"/></pattern></defs>';
+    ZONES.forEach((r, i) => {
+      if (r.prelude) s += `<rect class="zone pre" x="${colX[i]}" y="0" width="${colW[i]}" height="${H}"/>`;
+      else if ((i - firstRel) % 2 === 0) s += `<rect class="zone" x="${colX[i]}" y="0" width="${colW[i]}" height="${H}"/>`;
+      s += `<a class="ver-link${r.prelude ? ' pre' : ''}" href="#${r.id}" aria-label="Swift ${r.version}${r.prelude ? ` · ${esc(r.subtitle)}` : ''}"><text class="ver-label" x="${colX[i] + PAD - 4}" y="${compact ? 30 : 36}">${r.version}</text><text class="ver-date" x="${colX[i] + PAD - 3}" y="${compact ? 48 : 56}">${esc(caption(r))}</text></a>`;
     });
     for (const line of D.lines) {
       const y = rowY(line.id);
       const nameRows = splitLabel(line.name, compact ? 11 : 14);
       const nameStyle = compact ? ' style="font-size:12.5px"' : '';
       s += `<g class="row${dimLine === line.id ? ' on' : ''}" data-line="${line.id}">`;
-      s += `<path class="track" d="M${GUT - 14} ${y} H${W - 34}" stroke="var(--l${line.id})"/>`;
+      if (firstRel > 0) {
+        // Through the prelude zone the line is dotted: it began before 6.0, but that part isn't "new".
+        s += `<path class="track pre" d="M${GUT - 14} ${y} H${colX[firstRel]}" stroke="var(--l${line.id})"/>`;
+        s += `<path class="track" d="M${colX[firstRel]} ${y} H${W - 34}" stroke="var(--l${line.id})"/>`;
+      } else {
+        s += `<path class="track" d="M${GUT - 14} ${y} H${W - 34}" stroke="var(--l${line.id})"/>`;
+      }
       s += `<g class="line-group" data-toggle="${line.id}" tabindex="0" role="button" aria-label="${esc(t('map.onlyLine', { name: line.name }))}">
         <circle cx="${compact ? 18 : 24}" cy="${y - 7}" r="${compact ? 11 : 13}" fill="var(--l${line.id})"/>
         <text class="line-num" x="${compact ? 18 : 24}" y="${y - 2}" text-anchor="middle" fill="var(--l${line.id}-on)">${line.id}</text>
@@ -704,13 +722,13 @@
         ${nameRows[1] ? `<text class="line-name" x="${compact ? 34 : 44}" y="${y + (compact ? 12 : 14)}"${nameStyle}>${esc(nameRows[1])}</text>` : ''}
         ${!nameRows[1] && !compact && line.en ? `<text class="line-en" x="44" y="${y + 14}">${esc(line.en)}</text>` : ''}
       </g>`;
-      RELEASES.forEach((r, i) => {
+      ZONES.forEach((r, i) => {
         const list = grid[i][line.id] || [];
         const inner = colW[i] - PAD * 2;
         list.forEach((f, k) => {
           const sx = Math.round(colX[i] + PAD + (k + 0.5) * (inner / list.length));
           const rad = f.level === 'core' ? 8.5 : f.level === 'brief' ? 5.8 : 7.2;
-          s += `<a class="station ${f.level}${learned.has(f.id) ? ' done' : ''}" href="#f-${f.id}" data-id="${f.id}" style="--c: var(--l${line.id})">
+          s += `<a class="station ${f.level}${r.prelude ? ' pre' : ''}${learned.has(f.id) ? ' done' : ''}" href="#f-${f.id}" data-id="${f.id}" style="--c: var(--l${line.id})">
             <title>${esc(f.plainTitle)}</title>
             <circle cx="${sx}" cy="${y}" r="${rad}" stroke="var(--l${line.id})"/>
             <text class="label" transform="translate(${sx + 3} ${y - rad - 7}) rotate(-38)">${esc(f.short)}</text>
@@ -755,19 +773,19 @@
     const feats = rel.features.map((id) => FMAP.get(id));
     const byLine = {};
     feats.forEach((f) => { byLine[f.line] = (byLine[f.line] || 0) + 1; });
-    const idx = RELEASES.indexOf(rel);
-    const next = RELEASES[idx + 1];
+    const idx = ZONES.indexOf(rel);
+    const next = ZONES[idx + 1];
     main.innerHTML = `
-      <section class="rel-head">
+      <section class="rel-head${rel.prelude ? ' pre' : ''}">
         <div class="wrap rel-head-grid">
           <div class="rel-ver">${rel.version}<small>${esc(rel.subtitle)}</small></div>
           <div class="rel-meta">
-            <div class="eyebrow">${esc(t('rel.eyebrow', { version: rel.version, date: fmtDate(rel.date), n: feats.length }))}</div>
+            <div class="eyebrow">${esc(rel.prelude ? t('prelude.eyebrow', { n: feats.length }) : t('rel.eyebrow', { version: rel.version, date: fmtDate(rel.date), n: feats.length }))}</div>
             <h1>${esc(rel.title)}</h1>
             <p class="summary">${rel.summary}</p>
             <div class="rel-facts">
               ${Object.keys(byLine).sort().map((l) => `<span class="chip" data-line="${l}"><span class="bullet sm">${l}</span>${esc(LINES.get(+l).name)} ${byLine[l]}</span>`).join('')}
-              ${rel.blog ? `<a class="chip" href="${esc(rel.blog)}" target="_blank" rel="noopener">${esc(t('rel.notes'))} ↗</a>` : ''}
+              ${rel.blog ? `<a class="chip" href="${esc(rel.blog)}" target="_blank" rel="noopener">${esc(t(rel.prelude ? 'prelude.book' : 'rel.notes'))} ↗</a>` : ''}
             </div>
           </div>
         </div>
@@ -1284,8 +1302,9 @@
 
   // ───────────────────────── My pass ─────────────────────────
   function viewPass() {
-    const total = FEATURES.length;
-    const done = FEATURES.filter((f) => learned.has(f.id)).length;
+    // The pass covers the new features (6.0 → 6.4); the 5.x basics get their own row of holes.
+    const total = NEWF.length;
+    const done = NEWF.filter((f) => learned.has(f.id)).length;
     const pct = Math.round((done / total) * 100);
     const best = store.get('quizBest', null);
     main.innerHTML = `
@@ -1297,21 +1316,22 @@
             <div class="card-top"><div><b>SWIFT CLUB</b><span>${esc(t('pass.cardName', { from: RELEASES[0].version, to: RELEASES[RELEASES.length - 1].version }))}</span></div><svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="var(--brand)"/><path d="M8.5 21 L14.5 14.5 H23.5" fill="none" stroke="var(--brand-on)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="21" r="3.3" fill="var(--brand-on)"/><circle cx="23.5" cy="14.5" r="3.3" fill="var(--brand-on)"/></svg></div>
             <div class="card-pct num">${pct}%<small>${esc(t('pass.punched', { done, total }))}</small></div>
             <div class="card-bottom"><span>${esc(t('pass.firstRide', { date: fmtDate(firstRide) }))}</span><span>${esc(t('pass.quizBest', { best: best == null ? '—' : `${best}/${D.challenges.length}` }))}</span></div>
-            <div class="card-stripes" aria-hidden="true">${D.lines.map((l) => { const fs = FEATURES.filter((f) => f.line === l.id); const d = fs.filter((f) => learned.has(f.id)).length; return `<i style="--c: var(--l${l.id})"><b style="width:${(d / fs.length) * 100}%"></b></i>`; }).join('')}</div>
+            <div class="card-stripes" aria-hidden="true">${D.lines.map((l) => { const fs = NEWF.filter((f) => f.line === l.id); const d = fs.filter((f) => learned.has(f.id)).length; return `<i style="--c: var(--l${l.id})"><b style="width:${(d / fs.length) * 100}%"></b></i>`; }).join('')}</div>
           </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
-            <a class="btn primary" href="${(() => { const f = FEATURES.find((x) => !learned.has(x.id)); return f ? '#f-' + f.id : '#quiz'; })()}">${esc(t(done < total ? 'pass.next' : 'pass.allDone'))} →</a>
+            <a class="btn primary" href="${(() => { const f = NEWF.find((x) => !learned.has(x.id)); return f ? '#f-' + f.id : '#quiz'; })()}">${esc(t(done < total ? 'pass.next' : 'pass.allDone'))} →</a>
             <button class="btn" type="button" id="resetBtn">${esc(t('pass.clear'))}</button>
           </div>
         </div>
         <div>
           <h2 style="font-family:var(--font-display);font-size:20px;margin-bottom:14px">${esc(t('pass.byLine'))}</h2>
           <div class="lines-prog">${D.lines.map((l) => {
-            const fs = FEATURES.filter((f) => f.line === l.id);
+            const fs = NEWF.filter((f) => f.line === l.id);
             const d = fs.filter((f) => learned.has(f.id)).length;
             return `<div class="lp-row" data-line="${l.id}"><span class="bullet">${l.id}</span><div><div style="display:flex;justify-content:space-between;gap:8px"><span>${esc(l.name)}</span></div><div class="meter"><i style="width:${(d / fs.length) * 100}%"></i></div></div><span class="num">${d}/${fs.length}</span></div>`;
           }).join('')}</div>
-          <div class="punch-grid">${RELEASES.map((r) => `<div class="pg-row"><a class="pg-ver" href="#${r.id}" style="color:var(--ink);text-decoration:none">${r.version}</a><div class="pg-holes">${r.features.map((id) => { const f = FMAP.get(id); return `<a href="#f-${f.id}" data-line="${f.line}" class="${learned.has(f.id) ? 'done' : ''}" style="border-color:var(--c);${learned.has(f.id) ? 'background:var(--c)' : ''}" title="${esc(f.plainTitle)}" aria-label="${esc(f.plainTitle)}${learned.has(f.id) ? esc(t('pass.punchedSuffix')) : ''}"></a>`; }).join('')}</div></div>`).join('')}</div>
+          <div class="punch-grid">${ZONES.map((r) => `<div class="pg-row${r.prelude ? ' pre' : ''}"><a class="pg-ver" href="#${r.id}"${r.prelude ? ` title="${esc(r.subtitle)}"` : ''}>${r.version}</a><div class="pg-holes">${r.features.map((id) => { const f = FMAP.get(id); return `<a href="#f-${f.id}" data-line="${f.line}" class="${learned.has(f.id) ? 'done' : ''}" style="border-color:var(--c);${learned.has(f.id) ? 'background:var(--c)' : ''}" title="${esc(f.plainTitle)}" aria-label="${esc(f.plainTitle)}${learned.has(f.id) ? esc(t('pass.punchedSuffix')) : ''}"></a>`; }).join('')}</div></div>`).join('')}</div>
+          ${PRELUDE ? `<p class="pg-note">${esc(t('pass.preludeNote', { version: PRELUDE.version }))}</p>` : ''}
         </div>
       </div>`;
     let armed = false, armTimer;
