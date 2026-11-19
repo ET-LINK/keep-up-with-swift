@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-// Swift Club build script
+// Keep Up with Swift build script
 //
 //   content/<lang>/*.md  ──parse──▶  every Swift code block is really compiled / run by the local swiftc
-//                        ──emit───▶  assets/data.<lang>.js   (one data bundle per language)
-//                                    index.html              (open it locally, no server needed)
-//                                    dist/swift-club.html    (single file with every language inlined)
+//                        ──emit───▶  assets/data.<lang>.js         (one data bundle per language)
+//                                    index.html                    (open it locally, no server needed)
+//                                    dist/keep-up-with-swift.html  (single file with every language inlined)
 //
 // Languages are registered in content/languages.json. The default language (English) is loaded
 // eagerly by index.html; the others are fetched on demand. All languages must describe the same
@@ -593,7 +593,7 @@ ${bodyPart.trim()}
 </body>
 </html>
 `);
-write('dist/swift-club.html', `${headPart.trim()}
+write('dist/keep-up-with-swift.html', `${headPart.trim()}
 <style>
 ${css}
 </style>
@@ -611,6 +611,6 @@ for (const b of bundles) {
   const zones = `${b.releases.length - prelude.length} releases${prelude.length ? ` + ${prelude.map((r) => r.version).join(', ')} prelude` : ''}`;
   console.log(`✓ [${b.lang}] ${zones} · ${b.features.length - basics} features${basics ? ` + ${basics} basics` : ''} · ${b.challenges.length} challenges · ${b.meta.verified} code blocks verified by the compiler · assets/data.${b.lang}.js ${kb(`assets/data.${b.lang}.js`)}`);
 }
-console.log(`  compiled ${compiled} new, ${fromCache} from cache · dist/swift-club.html ${kb('dist/swift-club.html')}`);
+console.log(`  compiled ${compiled} new, ${fromCache} from cache · dist/keep-up-with-swift.html ${kb('dist/keep-up-with-swift.html')}`);
 console.log(`  compiler: ${baseBundle.meta.compiler}`);
 process.exit(problems.length ? 1 : 0);

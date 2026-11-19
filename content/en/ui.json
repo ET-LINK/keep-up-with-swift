@@ -1,9 +1,10 @@
 {
-  "meta.title": "Swift Club · Evolution Line Map",
+  "meta.title": "Keep Up with Swift · Evolution Line Map",
   "meta.description": "An interactive learning site for two years of Swift 6.0–6.4 features: a line map, real compiler output, and concurrency and ownership labs.",
 
   "skip": "Skip to content",
-  "brand.aria": "Swift Club home",
+  "brand.aria": "Keep Up with Swift home",
+  "brand.name": "Keep Up with Swift",
   "brand.tagline": "Evolution Line Map",
   "nav.aria": "Main navigation",
   "nav.map": "Map",
@@ -294,7 +295,7 @@
   "pass.punchedSuffix": " (punched)",
   "pass.preludeNote": "The {version} basics have their own row and don't count toward the percentage.",
 
-  "foot.about": "**Swift Club · Evolution Line Map**: an unofficial learning site for the new features in Swift 6.0 – 6.4.",
+  "foot.about": "**Keep Up with Swift · Evolution Line Map**: an unofficial learning site for the new features in Swift 6.0 – 6.4.",
   "foot.verified": "Every example was verified at build time by `{compiler}` ({date}). Proposal data comes from the official [Swift Evolution](https://www.swift.org/swift-evolution/) index; release highlights follow the release notes on swift.org.",
   "foot.trademark": "Swift and the Swift logo are trademarks of Apple Inc. This site is not affiliated with Apple.",
   "foot.storage": "Your punches are stored only in your browser. Shortcut: {kbd} to search."

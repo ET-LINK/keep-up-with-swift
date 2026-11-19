@@ -1,9 +1,10 @@
 {
-  "meta.title": "Swift 进化线路图",
+  "meta.title": "跟上 Swift · 进化线路图",
   "meta.description": "Swift 6.0 到 6.4 两年新特性的互动学习站：线路图、真实编译器输出、并发与所有权实验室。",
 
   "skip": "跳到正文",
-  "brand.aria": "Swift Club 首页",
+  "brand.aria": "跟上 Swift 首页",
+  "brand.name": "跟上 Swift",
   "brand.tagline": "进化线路图",
   "nav.aria": "主导航",
   "nav.map": "线路图",
@@ -282,7 +283,7 @@
   "pass.punchedSuffix": "（已打卡）",
   "pass.preludeNote": "{version} 的基础站单独一行，不计入百分比。",
 
-  "foot.about": "**Swift Club · 进化线路图**：Swift 6.0 – 6.4 新特性的非官方学习站。",
+  "foot.about": "**跟上 Swift · 进化线路图**：Swift 6.0 – 6.4 新特性的非官方学习站。",
   "foot.verified": "示例代码均在构建时由 `{compiler}` 编译验证（{date}）。提案数据来自 [Swift Evolution](https://www.swift.org/swift-evolution/) 官方索引，版本要点参考 swift.org 的各版本发布说明。",
   "foot.trademark": "Swift 及 Swift 标志是 Apple Inc. 的商标。本站与 Apple 无关。",
   "foot.storage": "打卡记录只保存在你的浏览器里。快捷键：{kbd} 搜索。"

@@ -1,4 +1,4 @@
-/* Swift Club · Evolution Line Map: page logic (no dependencies)
+/* Keep Up with Swift · Evolution Line Map: page logic (no dependencies)
  *
  * All visible text comes from a per-language data bundle (assets/data.<lang>.js, built by
  * tools/build.mjs from content/<lang>/):
@@ -31,7 +31,8 @@
     return tpl.content.textContent;
   };
 
-  // Local storage (this browser only)
+  // Local storage (this browser only). The 'swiftclub:' prefix comes from the site's original name;
+  // keep it, or everyone's saved progress (punched stations, quiz best) is lost.
   const store = {
     get(k, d) { try { const v = localStorage.getItem('swiftclub:' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
     set(k, v) { try { localStorage.setItem('swiftclub:' + k, JSON.stringify(v)); } catch { /* private mode etc. */ } },
@@ -1315,7 +1316,7 @@
       <div class="wrap pass-grid">
         <div>
           <div class="card" aria-label="${esc(t('pass.cardAria', { pct }))}">
-            <div class="card-top"><div><b>SWIFT CLUB</b><span>${esc(t('pass.cardName', { from: RELEASES[0].version, to: RELEASES[RELEASES.length - 1].version }))}</span></div><svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="var(--brand)"/><path d="M8.5 21 L14.5 14.5 H23.5" fill="none" stroke="var(--brand-on)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="21" r="3.3" fill="var(--brand-on)"/><circle cx="23.5" cy="14.5" r="3.3" fill="var(--brand-on)"/></svg></div>
+            <div class="card-top"><div><b>${esc(t('brand.name'))}</b><span>${esc(t('pass.cardName', { from: RELEASES[0].version, to: RELEASES[RELEASES.length - 1].version }))}</span></div><svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="var(--brand)"/><path d="M8.5 21 L14.5 14.5 H23.5" fill="none" stroke="var(--brand-on)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="21" r="3.3" fill="var(--brand-on)"/><circle cx="23.5" cy="14.5" r="3.3" fill="var(--brand-on)"/></svg></div>
             <div class="card-pct num">${pct}%<small>${esc(t('pass.punched', { done, total }))}</small></div>
             <div class="card-bottom"><span>${esc(t('pass.firstRide', { date: fmtDate(firstRide) }))}</span><span>${esc(t('pass.quizBest', { best: best == null ? '—' : `${best}/${D.challenges.length}` }))}</span></div>
             <div class="card-stripes" aria-hidden="true">${D.lines.map((l) => { const fs = NEWF.filter((f) => f.line === l.id); const d = fs.filter((f) => learned.has(f.id)).length; return `<i style="--c: var(--l${l.id})"><b style="width:${(d / fs.length) * 100}%"></b></i>`; }).join('')}</div>
