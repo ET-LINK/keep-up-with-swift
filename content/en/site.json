@@ -1,0 +1,40 @@
+{
+  "lines": [
+    { "id": 1, "name": "Concurrency", "desc": "From Swift 6's compile-time data-race checking, to 6.2's “approachable concurrency”, to 6.4's async cleanup and cancellation shields." },
+    { "id": 2, "name": "Ownership & Performance", "desc": "~Copyable, Span, InlineArray, UniqueArray… no copying, and no giving up memory safety." },
+    { "id": 3, "name": "Syntax & Ergonomics", "desc": "Typed throws, raw identifiers, trailing commas, module selectors: everyday code gets shorter and clearer." },
+    { "id": 4, "name": "Standard Library", "desc": "New types, algorithms, and APIs: Int128, RangeSet, Observations, async Result initializers…" },
+    { "id": 5, "name": "Interop & Platforms", "desc": "C / C++ / Objective-C / Java interop, plus Android, WebAssembly, and embedded." },
+    { "id": 6, "name": "Tooling & Testing", "desc": "Swift Testing, SwiftPM, per-group warning control, migration tooling, and the new build system." }
+  ],
+  "releases": [
+    { "version": "6.0", "file": "6.0.md" },
+    { "version": "6.1", "file": "6.1.md" },
+    { "version": "6.2", "file": "6.2.md" },
+    { "version": "6.3", "file": "6.3.md" },
+    { "version": "6.4", "file": "6.4.md" }
+  ],
+  "routes": [
+    {
+      "id": "A",
+      "name": "Concurrency Express",
+      "who": "For app developers: finally get Swift 6 concurrency straight",
+      "time": "About 90 min",
+      "stops": ["swift6-mode", "region-sending", "synchronization", "nonisolated-types", "default-isolation", "nonsending", "concurrent", "isolated-conformances", "task-immediate", "async-defer", "cancel-shield"]
+    },
+    {
+      "id": "B",
+      "name": "Performance Express",
+      "who": "If you care about performance, systems programming, or embedded",
+      "time": "About 80 min",
+      "stops": ["noncopyable-generics", "typed-throws", "inlinearray", "integer-generics", "span", "memory-safety", "borrow-mutate", "unique-box-array", "ref", "iterable"]
+    },
+    {
+      "id": "C",
+      "name": "Syntax Sightseeing Express",
+      "who": "A 30-minute sweep of the new syntax you'll use every day",
+      "time": "About 30 min",
+      "stops": ["count-where", "trailing-commas", "raw-identifiers", "interp-default", "enumerated", "module-selectors", "optional-some", "async-defer", "memberwise-private"]
+    }
+  ]
+}

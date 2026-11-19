@@ -1,11 +1,13 @@
 # 实验室数据
 # 每段代码都会被真实编译，实验室界面展示的“编译器结论”来自这里。
+# cmp：并发实验室底部对比卡片里的一句话总结
 # steps 的格式：车道 | 代码里的标记 | 说明
 #   车道 main = 主 actor，pool = 全局并发线程池，out = 离开主 actor，in = 回到主 actor，wait = 挂起等待
 
 ## concurrency-classic
 title: 旧规则（6.0 / 6.1 默认）
 note: "`nonisolated async` 函数总是跑到全局并发线程池上。"
+cmp: 非 Sendable 的 `api` 被带去了别的线程
 flags: -swift-version 6
 expect: error
 steps:
@@ -42,6 +44,7 @@ final class ProfileModel {
 ## concurrency-nonsending
 title: 新规则：nonsending（6.2 起）
 note: 开启 `NonisolatedNonsendingByDefault` 后，异步函数默认在调用者的 actor 上运行。
+cmp: 全程在主 actor 上，但 `parse` 会占用主线程
 flags: -swift-version 6 -enable-upcoming-feature NonisolatedNonsendingByDefault
 expect: ok
 steps:
@@ -77,6 +80,7 @@ final class ProfileModel {
 ## concurrency-concurrent
 title: 新规则 + @concurrent
 note: 默认留在原地，只把真正耗时的 `parse` 显式交给线程池。
+cmp: 只有耗时的 `parse` 被显式送去后台
 flags: -swift-version 6 -enable-upcoming-feature NonisolatedNonsendingByDefault
 expect: ok
 steps:

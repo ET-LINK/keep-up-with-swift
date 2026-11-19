@@ -1,0 +1,7 @@
+{
+  "default": "en",
+  "languages": [
+    { "code": "en", "name": "English", "short": "EN", "htmlLang": "en" },
+    { "code": "zh", "name": "中文", "short": "中文", "htmlLang": "zh-CN", "cjk": true }
+  ]
+}
