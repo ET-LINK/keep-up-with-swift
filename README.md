@@ -95,7 +95,7 @@ A code block looks like this:
 
 Pages is set to publish from the root of the `main` branch. The `.nojekyll` file at the root makes Pages skip Jekyll and publish the files as they are; otherwise the `.md` files under `content/` that carry `---` metadata would be treated as pages.
 
-To update the live site, rebuild locally, then commit and push the generated `assets/data.*.js`, `index.html`, and `dist/swift-club.html` together with your changes. It goes live a minute or two later.
+To update the live site, rebuild locally, then commit and push the generated `assets/data.*.js`, `index.html`, and `dist/swift-club.html` together with your changes. It goes live a minute or two later. GitHub Pages lets browsers keep each file for 10 minutes, so `index.html` asks for every file with a fingerprint of its content (`assets/app.js?v=…`): once the new version is live, a normal refresh shows it.
 
 There is no GitHub Actions build in the cloud because the build calls `swiftc`: a different Swift version can change the compiler output shown on the page.
 

@@ -94,12 +94,14 @@
     ];
   }
 
-  /** Load a language's bundle script on demand (works from file:// too). */
+  /** Load a language's bundle script on demand (works from file:// too). index.html lists each
+   *  bundle's content fingerprint, so after a deploy the URL changes and no old cached copy is used. */
   function loadBundle(code) {
     if (BUNDLES[code]) return Promise.resolve(BUNDLES[code]);
     return new Promise((resolve, reject) => {
       const s = document.createElement('script');
-      s.src = `assets/data.${code}.js`;
+      const fp = window.SWIFT_CLUB_FINGERPRINTS?.[code];
+      s.src = `assets/data.${code}.js` + (fp ? `?v=${fp}` : '');
       s.onload = () => (BUNDLES[code] ? resolve(BUNDLES[code]) : reject(new Error(`empty bundle: ${code}`)));
       s.onerror = () => reject(new Error(`cannot load ${s.src}`));
       document.head.append(s);

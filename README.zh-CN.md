@@ -95,7 +95,7 @@ node tools/build.mjs --no-compile   # 不调用 swiftc，只用缓存
 
 Pages 设置为从 `main` 分支的根目录发布。根目录的 `.nojekyll` 让 Pages 跳过 Jekyll，把文件原样发布出去，否则 `content/` 里带 `---` 元数据的 `.md` 会被当成页面处理。
 
-更新线上版本：在本机重新构建，把生成的 `assets/data.*.js`、`index.html`、`dist/swift-club.html` 和改动一起提交并推送，一两分钟后生效。
+更新线上版本：在本机重新构建，把生成的 `assets/data.*.js`、`index.html`、`dist/swift-club.html` 和改动一起提交并推送，一两分钟后生效。GitHub Pages 允许浏览器把每个文件缓存 10 分钟，所以 `index.html` 引用每个文件时都带上内容指纹（`assets/app.js?v=…`）：新版本上线后，普通刷新就能看到。
 
 没有用 GitHub Actions 在云端构建，是因为构建要调用 `swiftc`：换一个 Swift 版本，页面上的编译输出可能就变了。
 
