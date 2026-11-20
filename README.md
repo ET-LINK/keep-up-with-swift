@@ -4,7 +4,7 @@
 
 An interactive guide to the new features in Swift 6.0–6.4, drawn as a metro map: <https://et-link.github.io/keep-up-with-swift/>
 
-Each station covers one feature, with old and new code side by side and real compiler output. The site also has three labs, a Guess the Compiler quiz, an index of Swift Evolution proposals, and a short Swift 5.x concurrency primer.
+Each station covers one feature, with old and new code side by side and real compiler output. The site also has three labs, a Guess the Compiler quiz, an index of Swift Evolution proposals, and a short Swift 5.x primer on the basics the 6.x stations build on.
 
 ## Run
 

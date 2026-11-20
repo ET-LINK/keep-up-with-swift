@@ -1466,6 +1466,20 @@
    "link": "0317-async-let.md"
   },
   {
+   "id": "SE-0329",
+   "title": "Clock, Instant, and Duration",
+   "state": "implemented",
+   "version": "5.7",
+   "link": "0329-clock-instant-duration.md"
+  },
+  {
+   "id": "SE-0335",
+   "title": "Introduce existential `any`",
+   "state": "implemented",
+   "version": "5.6",
+   "link": "0335-existential-any.md"
+  },
+  {
    "id": "SE-0337",
    "title": "Incremental migration to concurrency checking",
    "state": "implemented",
@@ -1478,6 +1492,104 @@
    "state": "implemented",
    "version": "5.7",
    "link": "0338-clarify-execution-non-actor-async.md"
+  },
+  {
+   "id": "SE-0341",
+   "title": "Opaque Parameter Declarations",
+   "state": "implemented",
+   "version": "5.7",
+   "link": "0341-opaque-parameters.md"
+  },
+  {
+   "id": "SE-0346",
+   "title": "Lightweight same-type requirements for primary associated types",
+   "state": "implemented",
+   "version": "5.7",
+   "link": "0346-light-weight-same-type-syntax.md"
+  },
+  {
+   "id": "SE-0352",
+   "title": "Implicitly Opened Existentials",
+   "state": "implemented",
+   "version": "5.7",
+   "link": "0352-implicit-open-existentials.md"
+  },
+  {
+   "id": "SE-0362",
+   "title": "Piecemeal adoption of upcoming language improvements",
+   "state": "implemented",
+   "version": "5.8",
+   "link": "0362-piecemeal-future-features.md"
+  },
+  {
+   "id": "SE-0366",
+   "title": "`consume` operator to end the lifetime of a variable binding",
+   "state": "implemented",
+   "version": "5.9",
+   "link": "0366-move-function.md"
+  },
+  {
+   "id": "SE-0377",
+   "title": "`borrowing` and `consuming` parameter ownership modifiers",
+   "state": "implemented",
+   "version": "5.9",
+   "link": "0377-parameter-ownership-modifiers.md"
+  },
+  {
+   "id": "SE-0382",
+   "title": "Expression Macros",
+   "state": "implemented",
+   "version": "5.9",
+   "link": "0382-expression-macros.md"
+  },
+  {
+   "id": "SE-0389",
+   "title": "Attached Macros",
+   "state": "implemented",
+   "version": "5.9",
+   "link": "0389-attached-macros.md"
+  },
+  {
+   "id": "SE-0390",
+   "title": "Noncopyable structs and enums",
+   "state": "implemented",
+   "version": "5.9",
+   "link": "0390-noncopyable-structs-and-enums.md"
+  },
+  {
+   "id": "SE-0393",
+   "title": "Value and Type Parameter Packs",
+   "state": "implemented",
+   "version": "5.9",
+   "link": "0393-parameter-packs.md"
+  },
+  {
+   "id": "SE-0395",
+   "title": "Observation",
+   "state": "implemented",
+   "version": "5.9",
+   "link": "0395-observability.md"
+  },
+  {
+   "id": "SE-0397",
+   "title": "Freestanding Declaration Macros",
+   "state": "implemented",
+   "version": "5.9",
+   "link": "0397-freestanding-declaration-macros.md"
+  },
+  {
+   "id": "SE-0398",
+   "title": "Allow Generic Types to Abstract Over Packs",
+   "state": "implemented",
+   "version": "5.9",
+   "link": "0398-variadic-types.md"
+  },
+  {
+   "id": "SE-0399",
+   "title": "Tuple of value pack expansion",
+   "state": "implemented",
+   "version": "5.9",
+   "link": "0399-tuple-of-value-pack-expansion.md"
   },
   {
    "id": "SE-0412",

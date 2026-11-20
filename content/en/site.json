@@ -21,7 +21,7 @@
       "name": "Concurrency Express",
       "who": "For app developers: finally get Swift 6 concurrency straight",
       "time": "About 90 min",
-      "warmup": "5.x",
+      "warmup": { "zone": "5.x", "line": 1, "ask": "New to concurrency?" },
       "stops": ["swift6-mode", "region-sending", "synchronization", "nonisolated-types", "default-isolation", "nonsending", "concurrent", "isolated-conformances", "task-immediate", "async-defer", "cancel-shield"]
     },
     {
@@ -29,6 +29,7 @@
       "name": "Performance Express",
       "who": "If you care about performance, systems programming, or embedded",
       "time": "About 80 min",
+      "warmup": { "zone": "5.x", "line": 2, "ask": "New to borrowing and consuming?" },
       "stops": ["noncopyable-generics", "typed-throws", "inlinearray", "integer-generics", "span", "memory-safety", "borrow-mutate", "unique-box-array", "ref", "iterable"]
     },
     {

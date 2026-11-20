@@ -370,8 +370,14 @@ function buildLanguage(language) {
     }
     releases.push(rel);
   }
+  // A route's warmup points at one line of the prelude zone: { zone: "5.x", line: 1, ask: "New to concurrency?" }.
   for (const r of site.routes) {
-    if (r.warmup && !releases.some((rel) => rel.prelude && rel.version === r.warmup)) problems.push(`${tag} site.json › route ${r.id}: warmup "${r.warmup}" is not a prelude zone`);
+    if (!r.warmup) continue;
+    const where = `${tag} site.json › route ${r.id}: warmup`;
+    const { zone, line, ask } = r.warmup;
+    if (!releases.some((rel) => rel.prelude && rel.version === zone)) problems.push(`${where} zone "${zone}" is not a prelude zone`);
+    else if (!features.some((f) => f.release === zone && f.line === line)) problems.push(`${where} line ${line} has no stations in ${zone}`);
+    if (!ask) problems.push(`${where} needs an "ask" text`);
   }
 
   // ───────────── Guess the Compiler ─────────────
@@ -478,7 +484,7 @@ function skeleton(bundle) {
   for (const c of bundle.challenges) sig.set(`challenge ${c.id}`, [c.related, c.flags, verdict(c.answer)].join('|'));
   for (const [id, l] of Object.entries(bundle.labs)) sig.set(`lab ${id}`, [l.flags, verdict(l.result?.status), (l.steps || []).map((s) => `${s.lane}:${s.mark}`).join(',')].join('|'));
   for (const l of bundle.lines) sig.set(`line ${l.id}`, '');
-  for (const r of bundle.routes) sig.set(`route ${r.id}`, `${r.stops.join(',')}|${r.warmup || ''}`);
+  for (const r of bundle.routes) sig.set(`route ${r.id}`, `${r.stops.join(',')}|${r.warmup ? `${r.warmup.zone}:${r.warmup.line}` : ''}`);
   sig.set('releases', bundle.releaseInfo.map((r) => `${r.version}:${r.file}${r.prelude ? ':prelude' : ''}`).join(','));
   return sig;
 }

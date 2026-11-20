@@ -41,6 +41,7 @@
   // ───────────────────────── Current language ─────────────────────────
   let lang, D, UI, PLURAL;
   let LINES, FEATURES, FMAP, ZONES, RELEASES, PRELUDE, NEWF, RMAP, ORDER;
+  const FLAG_HELP = 'upcoming-features';                       // the 5.x basics station about upcoming-feature flags
   let searchIndex = [];
   let learned = new Set();
   let firstRide = null;
@@ -483,7 +484,9 @@
     const prev = FMAP.get(ORDER[pos - 1]);
     const next = FMAP.get(ORDER[pos + 1]);
     const since = f.since !== f.release ? `<span class="chip">${esc(t('feature.since', { version: f.since }))}</span>` : '';
-    const flag = f.flag ? `<span class="chip flag" title="${esc(t('feature.flagTip'))}">${esc(f.flag)}</span>` : '';
+    // The flag chip links to the basics station that explains upcoming-feature flags, when there is one.
+    const flagHelp = f.id !== FLAG_HELP && FMAP.has(FLAG_HELP);
+    const flag = f.flag ? `<${flagHelp ? `a href="#f-${FLAG_HELP}"` : 'span'} class="chip flag" title="${esc(t('feature.flagTip'))}">${esc(f.flag)}</${flagHelp ? 'a' : 'span'}>` : '';
     return `<article class="feature" id="f-${f.id}" data-line="${f.line}" data-id="${f.id}">
       <div class="f-top">
         <span class="f-line"><span class="bullet sm">${f.line}</span>${esc(line.name)}</span>
@@ -615,11 +618,13 @@
     const stops = r.stops.map((id) => FMAP.get(id)).filter(Boolean);
     const done = stops.filter((f) => learned.has(f.id)).length;
     const nextStop = stops.find((f) => !learned.has(f.id)) || stops[0];
-    const warm = r.warmup ? ZONES.find((z) => z.prelude && z.version === r.warmup) : null;
+    // A warmup is one line of the prelude zone (route A: the concurrency basics); it starts at that line's first station.
+    const warm = r.warmup ? ZONES.find((z) => z.prelude && z.version === r.warmup.zone) : null;
+    const warmStops = warm ? warm.features.map((id) => FMAP.get(id)).filter((f) => f.line === r.warmup.line) : [];
     return `<article class="route">
       <div class="route-head"><span class="route-badge">${esc(r.id)}</span><h3>${esc(r.name)}</h3></div>
       <p class="who">${esc(r.who)}</p>
-      ${warm ? `<a class="route-pre" href="#${warm.id}"><span class="pre-dot" aria-hidden="true"></span><span>${esc(t('route.warmup', { n: warm.features.length, version: warm.version }))} →</span></a>` : ''}
+      ${warmStops.length ? `<a class="route-pre" href="#f-${warmStops[0].id}"><span class="pre-dot" aria-hidden="true"></span><span>${esc(t('route.warmup', { ask: r.warmup.ask, n: warmStops.length, version: warm.version }))} →</span></a>` : ''}
       <ol class="route-stops">${stops.map((f) => `<li class="${learned.has(f.id) ? 'done' : ''}" data-line="${f.line}"><span class="stop-dot"></span><a href="#f-${f.id}">${esc(f.short)}</a><span class="stop-ver">${f.release}</span></li>`).join('')}</ol>
       <div class="route-foot"><span>${esc(r.time)} · ${esc(t('route.done', { done, total: stops.length }))}</span><a class="btn small" href="#f-${nextStop.id}">${esc(t(done ? 'route.continue' : 'route.start'))} →</a></div>
     </article>`;
@@ -683,7 +688,7 @@
       return by;
     });
     // A column is as wide as its busiest line needs, and never narrower than its "Sep 2024 · 15 stations" caption.
-    // The prelude column says "Before you board · 8 stations" instead of a date.
+    // The prelude column says "Before you board · 15 stations" instead of a date.
     const caption = (r) => `${r.prelude ? r.subtitle : fmtDate(r.date, 'month')} · ${t('map.stations', { n: r.features.length })}`;
     const colW = grid.map((by, i) => Math.max(
       Math.max(2, ...D.lines.map((l) => (by[l.id] || []).length)) * STEP + PAD * 2,

@@ -21,7 +21,7 @@
       "name": "并发通勤快线",
       "who": "写 App 的你：先把 Swift 6 并发彻底搞懂",
       "time": "约 90 分钟",
-      "warmup": "5.x",
+      "warmup": { "zone": "5.x", "line": 1, "ask": "并发零基础？" },
       "stops": ["swift6-mode", "region-sending", "synchronization", "nonisolated-types", "default-isolation", "nonsending", "concurrent", "isolated-conformances", "task-immediate", "async-defer", "cancel-shield"]
     },
     {
@@ -29,6 +29,7 @@
       "name": "性能直达快线",
       "who": "关心性能、系统编程或嵌入式",
       "time": "约 80 分钟",
+      "warmup": { "zone": "5.x", "line": 2, "ask": "borrowing、consuming 还不熟？" },
       "stops": ["noncopyable-generics", "typed-throws", "inlinearray", "integer-generics", "span", "memory-safety", "borrow-mutate", "unique-box-array", "ref", "iterable"]
     },
     {
